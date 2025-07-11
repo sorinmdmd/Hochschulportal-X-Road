@@ -1,0 +1,9 @@
+# Ignore socket files
+*.sock
+
+# Ignore PID files
+*.pid
+
+# Ignore specific paths if needed
+Docker/cserver/run/supervisor.sock
+Docker/cserver/run/crond.pid
