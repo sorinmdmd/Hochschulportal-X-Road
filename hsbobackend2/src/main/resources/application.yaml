@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: restapi
+server:
+  port: 8090
+data:
+  mongodb:
+   uri: mongodb://localhost:27017/hsbodb
+
