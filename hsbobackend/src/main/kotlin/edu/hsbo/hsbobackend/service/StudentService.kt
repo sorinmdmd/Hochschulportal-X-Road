@@ -12,6 +12,12 @@ class StudentService(val studentRepository: StudentRepository) {
     }
 
     fun addStudent(student: Student): Student {
-       return studentRepository.save(student)
+        return studentRepository.save(student)
+    }
+
+    fun findByUniId(id: Int): Student {
+        return studentRepository.findByUniId(id).orElseThrow {
+            throw IllegalArgumentException("Student with id $id not found")
+        }
     }
 }
