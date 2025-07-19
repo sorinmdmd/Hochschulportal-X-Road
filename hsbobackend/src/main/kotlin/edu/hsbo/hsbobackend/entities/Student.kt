@@ -1,7 +1,9 @@
 package edu.hsbo.hsbobackend.entities
 
+import edu.hsbo.hsbobackend.entities.enums.DegreeLevel
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
+import org.springframework.data.mongodb.core.mapping.DocumentReference
 import java.util.Date
 
 @Document(collection = "students")
@@ -12,4 +14,10 @@ class Student(
     var lastName: String,
     var nationality: String,
     var dateOfBirth: Date,
+    var uniId: Int,
+    var startDate: Date,
+    var actualSemester: Int,
+
+    @DocumentReference
+    var studyProgram: StudyProgram? = null
 )

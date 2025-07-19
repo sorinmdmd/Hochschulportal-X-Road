@@ -8,14 +8,15 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import org.w3c.dom.stylesheets.LinkStyle
 
 @RestController
 @RequestMapping("/api")
 class StudentController(val studentService: StudentService) {
 
     @GetMapping("/students")
-    fun getStudents(): String {
-        return studentService.getAllStudents().toString()
+    fun getStudents(): List<Student> {
+        return studentService.getAllStudents()
     }
 
     @PostMapping("/students")
