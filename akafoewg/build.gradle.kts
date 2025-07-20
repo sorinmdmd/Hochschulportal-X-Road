@@ -21,6 +21,8 @@ repositories {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.9") // Recommended for Spring Boot 3.5.x
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin") // Crucial for Kotlin data classes
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
