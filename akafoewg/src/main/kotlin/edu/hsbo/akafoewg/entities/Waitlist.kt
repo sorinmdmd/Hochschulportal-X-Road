@@ -8,7 +8,7 @@ import java.util.Date
 @Document(collection = "waitlist")
 data class Waitlist (
     @Id
-    val id: String,
+    val id: String? = null,
     val registrationDate: Date,
 
     @DocumentReference
