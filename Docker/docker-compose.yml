@@ -31,6 +31,15 @@ services:
       - ./hsbodata/mongodb-data:/data/db
       - ./hsbodata/mongodb-config:/data/configdb
       
+  akafoewg-mongodb:
+    image: docker.io/library/mongo:4.4
+    container_name: akafoewg-mongodb
+    ports:
+      - "27018:27017"
+    volumes:
+      - ./akafoewg/mongodb-data:/data/db
+      - ./akafoewg/mongodb-config:/data/configdb
+      
   ss1:
     image: niis/xroad-security-server-sidecar:7.6.1
     container_name: ss1

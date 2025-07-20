@@ -1,6 +1,5 @@
 package edu.hsbo.hsbobackend.entities
 
-import edu.hsbo.hsbobackend.entities.enums.DegreeLevel
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import org.springframework.data.mongodb.core.mapping.DocumentReference
