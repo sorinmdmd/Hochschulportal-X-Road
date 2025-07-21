@@ -12,5 +12,5 @@ data class Waitlist (
     val registrationDate: Date,
 
     @DocumentReference
-    var wg: WG? = null
+    var wg: HousingUnit? = null
 )
