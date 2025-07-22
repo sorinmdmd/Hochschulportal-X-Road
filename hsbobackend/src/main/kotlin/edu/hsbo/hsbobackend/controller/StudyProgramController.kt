@@ -3,6 +3,7 @@ package edu.hsbo.hsbobackend.controller
 import edu.hsbo.hsbobackend.entities.StudyProgram
 import edu.hsbo.hsbobackend.service.StudentService
 import edu.hsbo.hsbobackend.service.StudyProgramService
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -30,6 +31,7 @@ class StudyProgramController(val studyProgramService: StudyProgramService) {
     }
 
     @PostMapping("/addStudyProgram")
+    @PreAuthorize("hasRole('STUDENT')")
     fun addStudyProgram(@RequestBody studyProgram: StudyProgram): StudyProgram {
         return studyProgramService.addStudyProgram(studyProgram)
     }

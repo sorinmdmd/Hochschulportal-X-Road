@@ -16,12 +16,13 @@ class StudentController(val studentService: StudentService) {
 
 
     @GetMapping("/students")
-    @PreAuthorize("hasRole('admin')")
+    @PreAuthorize("hasRole('STUDENT')")
     fun getStudents(): List<Student> {
         return studentService.getAllStudents()
     }
 
     @PostMapping("/student")
+    @PreAuthorize("hasRole('STUDENT')")
     fun addStudent(@RequestBody student: Student): Student {
        return studentService.addStudent(student)
     }
