@@ -1,19 +1,13 @@
-<header class="header">
-    <div class="container">
-      <h1 class="title">Hochschule Bochum</h1>
-      <nav class="nav">
-        <ul class="nav-list">
-          <li class="nav-item">
-            <a routerLink="" routerLinkActive="active" class="nav-link">Home</a>
-          </li>
-          <li class="nav-item">
-            <a routerLink="/about-us" routerLinkActive="active" class="nav-link">About Us</a>
-          </li>
-          <li class="nav-item">
-            <a routerLink="/login" routerLinkActive="active" class="nav-link">Login</a>
-          </li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+<nav>
+    <button routerLink="/">Home</button>
+    <button routerLink="/aboutus">About Us</button>
+  
+    <button *ngIf="!isLoggedIn()" (click)="login()">Login</button>
+    <button *ngIf="isLoggedIn()" (click)="logout()">Logout</button>
+  </nav>
+  
+  <div *ngIf="isLoggedIn()">
+    <p><strong>Token:</strong></p>
+    <textarea [value]="token" rows="5" cols="60" readonly></textarea>
+  </div>
   

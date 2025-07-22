@@ -13,7 +13,7 @@ class Student(
     var lastName: String,
     var nationality: String,
     var dateOfBirth: Date,
-    var uniId: Int,
+    var studentId: Int,
     var startDate: Date,
     var actualSemester: Int,
 

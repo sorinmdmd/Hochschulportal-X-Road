@@ -16,6 +16,7 @@ class StudentController(val studentService: StudentService) {
 
 
     @GetMapping("/students")
+    @PreAuthorize("hasRole('admin')")
     fun getStudents(): List<Student> {
         return studentService.getAllStudents()
     }
@@ -27,7 +28,7 @@ class StudentController(val studentService: StudentService) {
 
     @GetMapping("/student/{id}")
     fun getStudent(@PathVariable id: Int): Student {
-        return studentService.findByUniId(id)
+        return studentService.findByStudentId(id)
     }
 
 }
