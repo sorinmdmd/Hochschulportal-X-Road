@@ -1,6 +1,7 @@
 <nav>
     <button routerLink="/">Home</button>
     <button routerLink="/aboutus">About Us</button>
+    <p *ngIf="isLoggedIn()">Hi {{name}}, Dein Matrikelnummer: {{studentId}}</p>
   
     <button *ngIf="!isLoggedIn()" (click)="login()">Login</button>
     <button *ngIf="isLoggedIn()" (click)="logout()">Logout</button>
