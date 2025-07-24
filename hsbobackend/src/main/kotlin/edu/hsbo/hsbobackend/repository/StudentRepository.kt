@@ -7,6 +7,5 @@ import java.util.Optional
 
 @Repository
 interface StudentRepository : MongoRepository<Student, String> {
-    fun findByFirstName(firstName: String): List<Student>
     fun findByStudentId(id:Int): Optional<Student>
 }

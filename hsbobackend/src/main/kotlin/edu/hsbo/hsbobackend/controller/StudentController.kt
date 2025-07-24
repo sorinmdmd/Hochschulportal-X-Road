@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import java.util.Optional
 
 @RestController
 @RequestMapping("/api")
 class StudentController(val studentService: StudentService) {
-
 
     @GetMapping("/students")
     @PreAuthorize("hasRole('ADMIN')")
@@ -30,5 +30,11 @@ class StudentController(val studentService: StudentService) {
     @GetMapping("/student/{id}")
     fun getStudent(@PathVariable id: Int): Student {
         return studentService.findByStudentId(id)
+    }
+
+    @GetMapping("/personalStudentInfo")
+    @PreAuthorize("hasRole('STUDENT')")
+    fun getStudentPersonalInfo(): Optional<Student> {
+        return studentService.findMyProfile()
     }
 }

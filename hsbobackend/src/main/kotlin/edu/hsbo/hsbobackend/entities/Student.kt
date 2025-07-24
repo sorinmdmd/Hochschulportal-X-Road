@@ -9,8 +9,6 @@ import java.util.Date
 class Student(
     @Id
     var id: String? = null,
-    var firstName: String,
-    var lastName: String,
     var nationality: String,
     var dateOfBirth: Date,
     var studentId: Int,

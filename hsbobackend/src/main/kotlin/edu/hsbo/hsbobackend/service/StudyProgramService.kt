@@ -25,5 +25,4 @@ class StudyProgramService(val studyProgramRepository: StudyProgramRepository) {
     fun addStudyProgram(studyProgram: StudyProgram): StudyProgram {
         return studyProgramRepository.save(studyProgram)
     }
-
 }
