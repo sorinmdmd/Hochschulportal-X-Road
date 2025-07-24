@@ -58,6 +58,7 @@ export class Accomodation implements OnInit {
     this.http.post(url, {}).subscribe({
       next: () => {
         this.postStatusMessage = `Started accommodation with ID ${accommodationId} successfully.`;
+        this.loadAccommodations()
         // Optionally refresh the list or update UI as needed
       },
       error: (err) => {

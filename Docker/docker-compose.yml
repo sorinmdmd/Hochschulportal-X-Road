@@ -63,6 +63,7 @@ services:
       - 1080:8080
       - 1443:8443
       - 15500:5500
+      - 15432:5432
     environment:
       XROAD_TOKEN_PIN: 123456xrd!
       XROAD_ADMIN_USER: xrd
