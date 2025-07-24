@@ -22,6 +22,39 @@ services:
     networks:
       - xroad-network
       
+  hsbo-mongodb:
+    image: docker.io/library/mongo:4.4
+    container_name: hsbo-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./hsbodata/mongodb-data:/data/db
+      - ./hsbodata/mongodb-config:/data/configdb
+      
+  akafoewg-mongodb:
+    image: docker.io/library/mongo:4.4
+    container_name: akafoewg-mongodb
+    ports:
+      - "27018:27017"
+    volumes:
+      - ./akafoewg/mongodb-data:/data/db
+      - ./akafoewg/mongodb-config:/data/configdb
+      
+      
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0.0
+    command:
+      - start-dev
+    container_name: keycloak
+    ports:
+      - "8080:8080"
+    environment:
+      - KEYCLOAK_ADMIN=ad
+      - KEYCLOAK_ADMIN_PASSWORD=ad
+    volumes:
+      - ./keycloak-data:/opt/keycloak/data
+      - ./keycloak-themes:/opt/keycloak/themes
+      
   ss1:
     image: niis/xroad-security-server-sidecar:7.6.1
     container_name: ss1
@@ -30,6 +63,7 @@ services:
       - 1080:8080
       - 1443:8443
       - 15500:5500
+      - 15432:5432
     environment:
       XROAD_TOKEN_PIN: 123456xrd!
       XROAD_ADMIN_USER: xrd
