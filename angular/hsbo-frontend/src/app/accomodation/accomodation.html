@@ -6,7 +6,10 @@
       <p class="description">{{ accommodation.description }}</p>
       <p><strong>Address:</strong> {{ accommodation.address }}, {{ accommodation.zipCode }} {{ accommodation.city }}</p>
       <p><strong>Free Spaces:</strong> {{ accommodation.freeSpaces }}</p>
+      <button (click)="startAccommodation(accommodation.id)">Start Accommodation</button>
     </div>
+  
+    <p *ngIf="postStatusMessage" class="status-message">{{ postStatusMessage }}</p>
   </div>
   
   <ng-template #loadingOrError>

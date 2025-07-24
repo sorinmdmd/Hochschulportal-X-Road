@@ -34,22 +34,26 @@ class HousingUnitOccupancyController(val housingUnitOccupancyService: HousingUni
      * @return ResponseEntity with the created HousingUnitActive and HTTP status 201 (Created),
      * or 400 (Bad Request) if input is invalid, or 404 (Not Found) if HousingUnit not found/no spaces.
      */
-    @PostMapping("/housingUnitActivate")
+    @PostMapping("/housingUnitActivate/{uniId}/{housingUnitId}/{startDate}")
     fun createHousingUnitActive(
-        @RequestParam uniId: String,
-        @RequestParam housingUnitId: String,
-        @RequestParam startDate: Instant,
-        @RequestParam(required = false) expiryDate: Instant? // expiryDate is optional
+        @PathVariable uniId: String,
+        @PathVariable housingUnitId: String,
+        @PathVariable startDate: Instant,
+        @RequestParam(required = false) expiryDate: Instant? // still optional as query parameter if desired
     ): ResponseEntity<HousingUnitOccupancy> {
-        // Service will handle detailed validation and business logic
-        val createdHousingUnitActive = housingUnitOccupancyService.createHouseUnitOccupancy(uniId, housingUnitId, startDate, expiryDate)
+        val createdHousingUnitActive = housingUnitOccupancyService.createHouseUnitOccupancy(
+            uniId,
+            housingUnitId,
+            startDate,
+            expiryDate
+        )
         return if (createdHousingUnitActive != null) {
             ResponseEntity(createdHousingUnitActive, HttpStatus.CREATED)
         } else {
-            // Service returns null if HousingUnit not found or no free spaces, or validation fails
-            ResponseEntity(HttpStatus.BAD_REQUEST) // Use BAD_REQUEST for general creation issues
+            ResponseEntity(HttpStatus.BAD_REQUEST)
         }
     }
+
 
     /**
      * Endpoint to get all HousingUnitActive entries.
