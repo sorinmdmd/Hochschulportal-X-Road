@@ -6,6 +6,7 @@ import java.util.Base64
 object SecurityContext {
     private val subId: ThreadLocal<String> = ThreadLocal()
     private val role: ThreadLocal<String> = ThreadLocal()
+    private val studentId : ThreadLocal<Int> = ThreadLocal()
 
     fun setSub(subId: String) {
         this.subId.set(subId)
@@ -15,6 +16,14 @@ object SecurityContext {
         return subId.get()
     }
 
+    fun setStudentId(id: Int) {
+        this.studentId.set(id)
+    }
+
+    fun getStudentId(): Int {
+        return studentId.get()
+    }
+
     fun decodeAndSetRole(token: String) {
         val parts = token.split(".")
         require(parts.size == 3)
@@ -22,6 +31,9 @@ object SecurityContext {
         val payloadJson = String(Base64.getUrlDecoder().decode(parts[1]))
         val payload = JSONObject(payloadJson)
         val roles = payload.getJSONObject("realm_access").getJSONArray("roles")
+        val studentId = payload.getInt("studentId")
+
+        setStudentId(studentId)
 
         setRole(
             when {

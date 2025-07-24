@@ -1,11 +1,13 @@
 <nav class="header">
   <div class="nav-left">
-    <button routerLink="/">Home</button>
-    <button routerLink="/aboutus">About Us</button>
+    <button routerLink="/">Homepage</button>
+    <button routerLink="/myProfile">Mein Profil</button>
+    <button routerLink="/accomodation"> Studentische Unterkunft</button>
+    <button routerLink="/aboutus">Über uns</button>
   </div>
   
   <div class="nav-right">
-    <p *ngIf="isLoggedIn()">Hi {{name}}, Dein Matrikelnummer: {{studentId}}</p>
+    <p *ngIf="isLoggedIn()">Hallo👋 {{name}}, Dein Matrikelnummer: {{studentId}}</p>
     
     <button *ngIf="!isLoggedIn()" (click)="login()">Login</button>
     <button *ngIf="isLoggedIn()" (click)="logout()">Logout</button>

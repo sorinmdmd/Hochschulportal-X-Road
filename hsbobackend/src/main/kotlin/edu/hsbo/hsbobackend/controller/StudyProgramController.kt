@@ -1,5 +1,6 @@
 package edu.hsbo.hsbobackend.controller
 
+import edu.hsbo.hsbobackend.SecurityContext
 import edu.hsbo.hsbobackend.entities.StudyProgram
 import edu.hsbo.hsbobackend.service.StudentService
 import edu.hsbo.hsbobackend.service.StudyProgramService
@@ -18,6 +19,7 @@ class StudyProgramController(val studyProgramService: StudyProgramService) {
     @GetMapping("/studyPrograms")
     @PreAuthorize("hasRole('STUDENT')")
     fun getStudyPrograms(): List<StudyProgram> {
+        println(SecurityContext.getStudentId())
         return studyProgramService.getAllStudyPrograms()
     }
 

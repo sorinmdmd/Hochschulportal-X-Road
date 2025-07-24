@@ -31,5 +31,4 @@ class StudentController(val studentService: StudentService) {
     fun getStudent(@PathVariable id: Int): Student {
         return studentService.findByStudentId(id)
     }
-
 }
