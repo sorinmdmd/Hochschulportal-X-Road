@@ -1,14 +1,13 @@
-<nav>
+<nav class="header">
+  <div class="nav-left">
     <button routerLink="/">Home</button>
     <button routerLink="/aboutus">About Us</button>
-    <p *ngIf="isLoggedIn()">Hi {{name}}, Dein Matrikelnummer: {{studentId}}</p>
-  
-    <button *ngIf="!isLoggedIn()" (click)="login()">Login</button>
-    <button *ngIf="isLoggedIn()" (click)="logout()">Logout</button>
-  </nav>
-  
-  <div *ngIf="isLoggedIn()">
-    <p><strong>Token:</strong></p>
-    <textarea [value]="token" rows="5" cols="60" readonly></textarea>
   </div>
   
+  <div class="nav-right">
+    <p *ngIf="isLoggedIn()">Hi {{name}}, Dein Matrikelnummer: {{studentId}}</p>
+    
+    <button *ngIf="!isLoggedIn()" (click)="login()">Login</button>
+    <button *ngIf="isLoggedIn()" (click)="logout()">Logout</button>
+  </div>
+</nav>
