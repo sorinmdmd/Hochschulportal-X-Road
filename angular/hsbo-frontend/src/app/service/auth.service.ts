@@ -56,6 +56,7 @@ export class AuthService {
   public async getToken(): Promise<string> {
     try {
       const token = await this.keycloak.getToken();
+
       console.log('Raw token from Keycloak:', token); // Add this for debugging
       return token || ''; // Return empty string instead of undefined
     } catch (error) {
@@ -63,5 +64,4 @@ export class AuthService {
       return '';
     }
   }
-  
 }

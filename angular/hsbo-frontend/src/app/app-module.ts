@@ -2,13 +2,14 @@ import { NgModule, provideBrowserGlobalErrorListeners,APP_INITIALIZER } from '@a
 import { BrowserModule } from '@angular/platform-browser';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 import { environment } from '../app/enviroments/enviroment';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import { Home } from './home/home';
 import { AboutUs } from './about-us/about-us';
 import { Header } from './header/header';
+import { AuthInterceptor } from './service/authInterceptor';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -23,6 +24,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
         redirectUri: environment.keycloakConfig.redirectUriLogin,
       },
       enableBearerInterceptor: true,
+      bearerPrefix: 'Bearer',
+      bearerExcludedUrls: [],
     });
 }
 
@@ -47,7 +50,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
       useFactory: initializeKeycloak,
       multi: true,
       deps: [KeycloakService],
-    }
+    },
   ],
   bootstrap: [App]
 })
