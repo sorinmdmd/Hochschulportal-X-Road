@@ -16,7 +16,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 @Configuration
 @EnableMethodSecurity
 class SecurityConfig(private val corsConfig: CorsConfig) {
-    
+
     @Bean
     fun jwtAuthenticationConverter(): JwtAuthenticationConverter {
         val jwtAuthenticationConverter = JwtAuthenticationConverter()

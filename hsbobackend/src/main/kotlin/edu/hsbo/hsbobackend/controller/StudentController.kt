@@ -16,7 +16,7 @@ class StudentController(val studentService: StudentService) {
 
 
     @GetMapping("/students")
-    @PreAuthorize("hasRole('STUDENT')")
+    @PreAuthorize("hasRole('ADMIN')")
     fun getStudents(): List<Student> {
         return studentService.getAllStudents()
     }

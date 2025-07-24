@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController
 class StudyProgramController(val studyProgramService: StudyProgramService) {
 
     @GetMapping("/studyPrograms")
+    @PreAuthorize("hasRole('STUDENT')")
     fun getStudyPrograms(): List<StudyProgram> {
         return studyProgramService.getAllStudyPrograms()
     }
