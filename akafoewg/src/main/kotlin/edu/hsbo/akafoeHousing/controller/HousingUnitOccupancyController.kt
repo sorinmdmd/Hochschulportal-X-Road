@@ -122,4 +122,19 @@ class HousingUnitOccupancyController(val housingUnitOccupancyService: HousingUni
             ResponseEntity(HttpStatus.NOT_FOUND)
         }
     }
+
+    @GetMapping("/housingUnitOccupancyByStudentId/{studentId}")
+    fun getOccupancyByStudentId(@PathVariable studentId: String): ResponseEntity<HousingUnitOccupancy> {
+        val optionalOccupancy = housingUnitOccupancyService.getHouseOccupancyByStudentId(studentId)
+
+        return if (optionalOccupancy.isPresent) {
+            // If an occupancy is found, return it with 200 OK
+            ResponseEntity.ok(optionalOccupancy.get())
+        } else {
+            // If no occupancy is found, return 404 Not Found
+            ResponseEntity.notFound().build()
+            // Or you could return 204 No Content if you prefer for an empty response body
+            // ResponseEntity.noContent().build()
+        }
+    }
 }

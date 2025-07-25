@@ -1,12 +1,13 @@
 package edu.hsbo.akafoeHousing.service
 
 import edu.hsbo.akafoeHousing.entities.HousingUnit
+import edu.hsbo.akafoeHousing.repository.HousingUnitOccupancyRepository
 import edu.hsbo.akafoeHousing.repository.HousingUnitRepository
 import org.springframework.stereotype.Service
 import java.util.Optional
 
 @Service
-class HousingUnitService(val housingUnitRepository: HousingUnitRepository) {
+class HousingUnitService(val housingUnitRepository: HousingUnitRepository, val housingUnitOccupancyRepository: HousingUnitOccupancyRepository) {
 
     /**
      * Adds a new HousingUnit to the database.

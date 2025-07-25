@@ -36,6 +36,10 @@ class HousingUnitOccupancyService(
             println("Error: WG ID is required for HouseUnitOccupancy creation.")
             return null
         }
+        if(housingUnitOccupancyRepository.findByStudentId(studentId).isPresent) {
+            println("Error: A HousingUnitOccupancy already exists for student ID '$studentId'.")
+            return null
+        }
 
         // Fetch the associated WG document
         val housingUnitOptional = housingUnitService.getHousingUnitById(housingUnitId)
@@ -145,5 +149,8 @@ class HousingUnitOccupancyService(
             println("Error: HouseUnitOccupancy with ID '$id' not found for deletion.")
             return false
         }
+    }
+    fun getHouseOccupancyByStudentId(studentId: String): Optional<HousingUnitOccupancy>{
+       return  housingUnitOccupancyRepository.findByStudentId(studentId)
     }
 }
