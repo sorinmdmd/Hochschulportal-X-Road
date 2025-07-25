@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import java.io.BufferedReader
+import java.io.InputStreamReader
 import java.time.Instant
+import java.util.concurrent.TimeUnit
 
 @RestController
 @RequestMapping("/api")
@@ -92,7 +95,10 @@ class HousingUnitOccupancyController(val housingUnitOccupancyService: HousingUni
      * or HTTP status 404 (Not Found) if the HousingUnitActive was not found.
      */
     @PutMapping("/housingUnitOccupancy/{id}")
-    fun updateHousingUnitActive(@PathVariable id: String, @RequestBody updatedHousingUnitOccupancy: HousingUnitOccupancy): ResponseEntity<HousingUnitOccupancy> {
+    fun updateHousingUnitActive(
+        @PathVariable id: String,
+        @RequestBody updatedHousingUnitOccupancy: HousingUnitOccupancy
+    ): ResponseEntity<HousingUnitOccupancy> {
         val result = housingUnitOccupancyService.updateHouseUnitOccupancy(id, updatedHousingUnitOccupancy)
         return if (result != null) {
             ResponseEntity(result, HttpStatus.OK)
