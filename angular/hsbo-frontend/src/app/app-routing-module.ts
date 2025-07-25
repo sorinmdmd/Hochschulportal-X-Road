@@ -5,12 +5,14 @@ import { AuthGuard } from './service/keycloak.guard';
 import { AboutUs } from './about-us/about-us';
 import { MyProfile } from './my-profile/my-profile';
 import { Accomodation } from './accomodation/accomodation';
+import { Logs } from './logs/logs';
 
 const routes: Routes = [
   {path: '', component: Home},
   {path: 'aboutus', component: AboutUs},
   {path: 'myProfile', component: MyProfile},
-  {path: 'accomodation', component: Accomodation}
+  {path: 'accomodation', component: Accomodation},
+  {path: 'logs', component: Logs}
 ];
 
 @NgModule({

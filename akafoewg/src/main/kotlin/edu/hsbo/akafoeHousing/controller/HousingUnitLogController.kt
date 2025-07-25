@@ -53,7 +53,7 @@ class HousingUnitLogController {
                 .replace("'", "'\\''") // Crucial for embedding in bash single quotes
                 .replace("\n", " ")
                 .replace("studentId", studentId)
-            
+
             // Construct the full command to be executed within the Docker container.
             // PGPASSWORD is set as an environment variable for psql.
             // The entire 'psql -c ...' part is enclosed in single quotes for bash -c,

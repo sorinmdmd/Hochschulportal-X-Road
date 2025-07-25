@@ -12,6 +12,7 @@ import { Header } from './header/header';
 import { AuthInterceptor } from './service/authInterceptor';
 import { MyProfile } from './my-profile/my-profile';
 import { Accomodation } from './accomodation/accomodation';
+import { Logs } from './logs/logs';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -39,7 +40,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
     AboutUs,
     Header,
     MyProfile,
-    Accomodation
+    Accomodation,
+    Logs
   ],
   imports: [
     BrowserModule,

@@ -29,4 +29,10 @@ class AccommodationXRoadController(val xRoadAccommodationService: AccommodationX
     ): ResponseEntity<String> {
         return xRoadAccommodationService.bookAccommodation(accommodationID, startDate)
     }
+
+    @GetMapping("/xroad/accommodation/getLogs")
+    @PreAuthorize("hasRole('STUDENT')")
+    fun getAccommodationLogs(): ResponseEntity<String> {
+        return xRoadAccommodationService.getStudentLogs()
+    }
 }
