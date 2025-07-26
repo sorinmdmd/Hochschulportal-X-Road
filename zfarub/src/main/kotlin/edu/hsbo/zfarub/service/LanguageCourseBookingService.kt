@@ -4,6 +4,7 @@ import edu.hsbo.zfarub.entities.LanguageCourse
 import edu.hsbo.zfarub.entities.LanguageCourseBooking
 import edu.hsbo.zfarub.repository.LanguageCourseBookingRepository
 import edu.hsbo.zfarub.repository.LanguageCourseRepository
+import org.bson.types.ObjectId
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.Optional
@@ -14,7 +15,9 @@ class LanguageCourseBookingService(
     val languageCourseRepository: LanguageCourseRepository
 ) { fun createBooking(studentId: String, courseId: String): LanguageCourseBooking? {
     // Check if student already booked this course
-    val existingBooking = languageCourseBookingRepository.findByStudentIdAndCourseId(studentId, courseId)
+    val objectId = ObjectId(courseId)
+    val existingBooking = languageCourseBookingRepository.findByStudentIdAndCourseId(studentId, objectId)
+
     if (existingBooking != null) {
         throw IllegalStateException("Student has already booked this course")
     }
