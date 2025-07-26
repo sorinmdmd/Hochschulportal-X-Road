@@ -6,11 +6,10 @@ import org.springframework.data.mongodb.core.mapping.DocumentReference
 
 @Document(collection = "languageCourseBooking")
 class LanguageCourseBooking(
-    @Id var id: String,
+    @Id
+    var id: String? = null,
     var studentId: String?,
 
     @DocumentReference
-    val course: LanguageCourse,
-) {
-
-}
+    val course: LanguageCourse? = null,
+)

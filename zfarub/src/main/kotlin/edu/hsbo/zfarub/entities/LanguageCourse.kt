@@ -6,12 +6,13 @@ import java.time.Instant
 
 @Document(collection = "languageCourses")
 data class LanguageCourse(
-    @Id val id: String,
+    @Id
+    val id: String? = null,
     val language: String,
     val duration: String,
     val start: Instant,
     val end: Instant,
-    val availableSlots: Int,
+    var availableSlots: Int,
     val group: String,
     val location: String,
     val tutorName: String,
