@@ -1,0 +1,28 @@
+<div class="language-courses-container">
+    <h2>Available Language Courses</h2>
+  
+    <div *ngIf="bookingMessage" class="booking-message">
+      {{ bookingMessage }}
+    </div>
+  
+    <div *ngIf="languageCourses.length === 0">
+      <p>No language courses available at the moment.</p>
+    </div>
+  
+    <div *ngIf="languageCourses.length > 0" class="course-list">
+      <div *ngFor="let course of languageCourses" class="course-card">
+        <h3>{{ course.language }} - {{ course.group }}</h3>
+        <p><strong>Duration:</strong> {{ course.duration }}</p>
+        <p><strong>Start:</strong> {{ course.start | date:'medium' }}</p>
+        <p><strong>End:</strong> {{ course.end | date:'medium' }}</p>
+        <p><strong>Available Slots:</strong> {{ course.availableSlots }}</p>
+        <p><strong>Location:</strong> {{ course.location }}</p>
+        <p><strong>Tutor:</strong> {{ course.tutorName }}</p>
+        <button (click)="bookCourse(course.id)" [disabled]="course.availableSlots <= 0">
+          Book Course
+        </button>
+        <span *ngIf="course.availableSlots <= 0" class="no-slots-message">No slots available</span>
+      </div>
+    </div>
+  </div>
+  

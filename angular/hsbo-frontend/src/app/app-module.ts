@@ -14,6 +14,7 @@ import { MyProfile } from './my-profile/my-profile';
 import { Accomodation } from './accomodation/accomodation';
 import { Logs } from './logs/logs';
 import { MyAccomodation } from './my-accomodation/my-accomodation';
+import { LanguageCourses } from './language-courses/language-courses';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -43,7 +44,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
     MyProfile,
     Accomodation,
     Logs,
-    MyAccomodation
+    MyAccomodation,
+    LanguageCourses
   ],
   imports: [
     BrowserModule,

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api")
 class LanguageCourseController(val languageCourseService: LanguageCourseService) {
+
     @GetMapping("/languageCourses")
     fun getAll() = languageCourseService.findAll()
 
@@ -25,12 +26,12 @@ class LanguageCourseController(val languageCourseService: LanguageCourseService)
     @PostMapping("/languageCourse")
     fun create(@RequestBody course: LanguageCourse) = languageCourseService.save(course)
 
-    @PutMapping("languageCourse/{id}")
+    @PutMapping("/languageCourse/{id}")
     fun update(@PathVariable id: String, @RequestBody course: LanguageCourse) =
         languageCourseService.update(id, course)
             ?: ResponseEntity.notFound().build<Any>()
 
-    @DeleteMapping("languageCourse/{id}")
+    @DeleteMapping("/languageCourse/{id}")
     fun delete(@PathVariable id: String): ResponseEntity<Void> =
         if (languageCourseService.delete(id)) ResponseEntity.noContent().build()
         else ResponseEntity.notFound().build()

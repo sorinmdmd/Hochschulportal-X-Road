@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api")
 class LanguageCourseBookingController(val languageCourseBookingService: LanguageCourseBookingService) {
 
-    @PostMapping("booking")
+    @PostMapping("/booking")
     fun createBooking(@RequestParam studentId: String, @RequestParam courseId: String): ResponseEntity<Any> {
         return try {
             val booking = languageCourseBookingService.createBooking(studentId, courseId)
@@ -29,7 +29,7 @@ class LanguageCourseBookingController(val languageCourseBookingService: Language
         }
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("courseBooking/{id}")
     fun getBooking(@PathVariable id: String): ResponseEntity<LanguageCourseBooking> {
         val booking = languageCourseBookingService.getBookingById(id)
         return if (booking != null) {
@@ -39,17 +39,17 @@ class LanguageCourseBookingController(val languageCourseBookingService: Language
         }
     }
 
-    @GetMapping
+    @GetMapping("/allBookings")
     fun getAllBookings(): ResponseEntity<List<LanguageCourseBooking>> {
         return ResponseEntity.ok(languageCourseBookingService.getAllBookings())
     }
 
-    @GetMapping("/student/{studentId}")
+    @GetMapping("/booking/student/{studentId}")
     fun getBookingsByStudent(@PathVariable studentId: String): ResponseEntity<List<LanguageCourseBooking>> {
         return ResponseEntity.ok(languageCourseBookingService.getBookingsByStudentId(studentId))
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/courseBooking/{id}")
     fun cancelBooking(@PathVariable id: String): ResponseEntity<Any> {
         return if (languageCourseBookingService.cancelBooking(id)) {
             ResponseEntity.ok(mapOf("message" to "Booking cancelled successfully"))
@@ -57,4 +57,5 @@ class LanguageCourseBookingController(val languageCourseBookingService: Language
             ResponseEntity.notFound().build()
         }
     }
+
 }
