@@ -1,0 +1,18 @@
+<nav class="header">
+  <div class="nav-left">
+    <button routerLink="/">Homepage</button>
+    <button routerLink="/myProfile">Mein Profil</button>
+    <button routerLink="/accomodation"> Studentische Unterkunft</button>
+    <button routerLink="/my-accomodation"> Meine Unterkunfte</button>
+    <button routerLink="/language-courses"> Sprachkursen</button>
+    <button routerLink="/my-language-course"> Meine Sprachkursen</button>
+    <button routerLink="/logs"> Logs von AKAFOE</button>
+  </div>
+  
+  <div class="nav-right">
+    <p *ngIf="isLoggedIn()">Hallo👋 {{name}}, Dein Matrikelnummer: {{studentId}}</p>
+    
+    <button *ngIf="!isLoggedIn()" (click)="login()">Login</button>
+    <button *ngIf="isLoggedIn()" (click)="logout()">Logout</button>
+  </div>
+</nav>

@@ -1,0 +1,26 @@
+<!-- Logs Table -->
+<div *ngIf="logs.length > 0" class="logs-table-container">
+  <table class="logs-table">
+    <thead>
+      <tr>
+        <th>Time</th>
+        <th>Method</th>
+        <th>Query ID</th>
+        <th>X-Road-Client</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let log of logs">
+        <td>{{ log.log_time | date: 'short' }}</td>
+        <td [ngClass]="{
+          'method-get': log.http_method === 'GET',
+          'method-post': log.http_method === 'POST',
+          'method-put': log.http_method === 'PUT',
+          'method-delete': log.http_method === 'DELETE'
+        }"><strong>{{ log.http_method }}</strong></td>
+        <td><code class="log-code">{{ log.queryid }}</code></td>
+        <td><code class="log-code">{{ log.xRoadClient || 'N/A' }}</code></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

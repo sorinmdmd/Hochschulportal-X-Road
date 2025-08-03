@@ -1,13 +1,8 @@
 @echo off
 setlocal enabledelayedexpansion
 
-REM ---------------------------------
-REM Backup X-Road Docker volumes
-REM Author: ChatGPT
-REM ---------------------------------
-
 REM Set backup folder to current directory
-set BACKUP_DIR=%cd%
+set BACKUP_DIR=%cd%\xroadVolumesBackup
 
 REM Define list of volumes to backup
 set VOLUMES=cs-db-data cs-conf-data ca-data ss1-db-data ss1-conf-data ss1-archive-data ss2-db-data ss2-conf-data ss2-archive-data ss3-db-data ss3-conf-data ss3-archive-data

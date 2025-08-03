@@ -1,0 +1,19 @@
+<div class="accommodation-container" *ngIf="!isLoading && accommodations.length > 0; else loadingOrError">
+    <h2>Verfügbare Unterkunfte</h2>
+    <div *ngFor="let accommodation of accommodations" class="accommodation-card">
+      <h3>{{ accommodation.name }}</h3>
+      <p class="category"><strong>Kategorie:</strong> {{ accommodation.category }}</p>
+      <p class="description">{{ accommodation.description }}</p>
+      <p><strong>Addresse:</strong> {{ accommodation.address }}, {{ accommodation.zipCode }} {{ accommodation.city }}</p>
+      <p><strong>Verfügbare Plätze:</strong> {{ accommodation.freeSpaces }}</p>
+      <button (click)="startHousingUnitBooking(accommodation.id)">Unterkunft Buchen</button>
+    </div>
+  
+    <p *ngIf="postStatusMessage" class="status-message">{{ postStatusMessage }}</p>
+  </div>
+  
+  <ng-template #loadingOrError>
+    <div *ngIf="isLoading">Unterkunfte laden...</div>
+    <div *ngIf="!isLoading && error" class="error">{{ error }}</div>
+  </ng-template>
+  
