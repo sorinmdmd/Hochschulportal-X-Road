@@ -50,7 +50,7 @@ ngOnInit(): void {
 fetchAccommodation(): void {
   this.isLoading = true; // Set loading to true before the request
   this.errorMessage = null; // Clear any previous error messages
-  const apiUrl = 'http://localhost:8085/api/xroad/accommodation/getMyAccommodation';
+  const apiUrl = 'http://localhost:8085/api/x-road/housingUnit/getMyBooking';
 
   this.http.get<Accommodation>(apiUrl).subscribe({
     next: (data) => {

@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 
 
-interface Accommodation {
+interface HousingUnit {
   id: string;
   name: string;
   description: string;
@@ -23,7 +23,7 @@ interface Accommodation {
 })
 export class Accomodation implements OnInit {
 
-  accommodations: Accommodation[] = [];
+  accommodations: HousingUnit[] = [];
   isLoading = true;
   error?: string;
   postStatusMessage?: string;
@@ -31,34 +31,34 @@ export class Accomodation implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.loadAccommodations();
+    this.loadHousingUnits();
   }
 
-  loadAccommodations(): void {
-    this.http.get<Accommodation[]>('http://localhost:8085/api/x-road/accommodations')
+  loadHousingUnits(): void {
+    this.http.get<HousingUnit[]>('http://localhost:8085/api/x-road/housingUnits')
       .subscribe({
         next: (data) => {
           this.accommodations = data;
           this.isLoading = false;
         },
         error: (err) => {
-          this.error = 'Failed to load accommodations.';
+          this.error = 'Failed to load HousingUnits.';
           console.error(err);
           this.isLoading = false;
         }
       });
   }
 
-  startAccommodation(accommodationId: string): void {
+  startHousingUnitBooking(accommodationId: string): void {
     // Current date/time in Instant format (ISO 8601 with Zulu time)
     const startDate = new Date().toISOString();
 
-    const url = `http://localhost:8085/api/x-road/accommodation/${accommodationId}/${startDate}`;
+    const url = `http://localhost:8085/api/x-road/housingUnit/${accommodationId}/${startDate}`;
 
     this.http.post(url, {}).subscribe({
       next: () => {
         this.postStatusMessage = `Started accommodation with ID ${accommodationId} successfully.`;
-        this.loadAccommodations()
+        this.loadHousingUnits()
         // Optionally refresh the list or update UI as needed
       },
       error: (err) => {

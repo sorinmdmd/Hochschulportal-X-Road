@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 
@@ -24,7 +24,7 @@ logs: LogEntry[] = [];
 // Property to store any error messages
 errorMessage: string = '';
 // The API endpoint URL
-private apiUrl = 'http://localhost:8085/api/xroad/accommodation/getLogs';
+private apiUrl = 'http://localhost:8085/api/x-road/housingUnits/getLogs';
 
 constructor(private http: HttpClient) { }
 

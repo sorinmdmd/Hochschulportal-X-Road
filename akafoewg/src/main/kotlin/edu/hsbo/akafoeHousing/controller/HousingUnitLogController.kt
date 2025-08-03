@@ -14,8 +14,8 @@ class HousingUnitLogController {
 
     // WARNING: Hardcoding passwords is a major security risk.
     // For production, use environment variables, Spring Cloud Config, or a secrets management solution.
-    private val PGPASSWORD = "O1JgsSNqlBCBm2nEQ1iTZQGCdR-8Mhpp"
-    private val DOCKER_CONTAINER_NAME = "ss1"
+    private val PGPASSWORD = "HVjuyWqG0vte9uD4FwkHBJykN1UOdNs1"
+    private val DOCKER_CONTAINER_NAME = "ss2"
     private val PSQL_HOST = "127.0.0.1"
     private val PSQL_USER = "messagelog"
     private val PSQL_DB = "messagelog"

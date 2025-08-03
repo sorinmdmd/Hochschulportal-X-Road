@@ -26,4 +26,10 @@ class LanguageCourseXRoadController(val languageCourseXRoadService: LanguageCour
     ): ResponseEntity<String> {
         return languageCourseXRoadService.bookLanguageCourse(languageCourseId)
     }
+
+    @GetMapping("/x-road/myLanguageCourses")
+    @PreAuthorize("hasRole('STUDENT')")
+    fun myLanguageCourse(): ResponseEntity<String> {
+        return languageCourseXRoadService.findStudentCourses()
+    }
 }

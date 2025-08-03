@@ -35,4 +35,15 @@ class LanguageCourseXRoadService(private val restTemplate: RestTemplate) {
         return restTemplate.exchange(url, HttpMethod.POST, entity, String::class.java)
     }
 
+    fun findStudentCourses(): ResponseEntity<String> {
+        val url =
+            "http://localhost:1080/r1/DEBO/EDU/BOECOSYSTEM/ZFARUB-PROVIDER/ZFARUB-SERVICE/api/booking/student/${SecurityContext.getStudentId()}"
+
+        val headers = HttpHeaders()
+        headers.set("X-Road-Client", "DEBO/EDU/BOECOSYSTEM/ZFARUB-CONSUMER")
+
+        val entity = HttpEntity<String>(headers)
+
+        return restTemplate.exchange(url, HttpMethod.GET, entity, String::class.java)
+    }
 }
