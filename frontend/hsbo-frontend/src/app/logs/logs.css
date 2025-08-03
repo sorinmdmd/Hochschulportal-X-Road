@@ -1,0 +1,26 @@
+.logs-table-container {
+  overflow-x: auto;
+  margin-top: 20px;
+}
+
+.logs-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.logs-table th,
+.logs-table td {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.logs-table th {
+  background-color: #f3f4f6;
+  font-weight: bold;
+}
+
+.logs-table tr:nth-child(even) {
+  background-color: #f9fafb;
+}

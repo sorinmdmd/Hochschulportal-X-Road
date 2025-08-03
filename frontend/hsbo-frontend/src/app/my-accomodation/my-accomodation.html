@@ -1,0 +1,35 @@
+<div class="accommodation-container">
+    <h2>My Accommodation Details</h2>
+  
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="loading-message">
+      <p>Loading accommodation data...</p>
+    </div>
+  
+    <!-- Error State -->
+    <div *ngIf="errorMessage" class="error-message">
+      <p>{{ errorMessage }}</p>
+    </div>
+  
+    <!-- Accommodation Data Display -->
+    <div *ngIf="!isLoading && !errorMessage && accommodation" class="accommodation-details">
+      <h3>Accommodation Information</h3>
+      <p><strong>Accommodation ID:</strong> {{ accommodation.id }}</p>
+      <p><strong>Student ID:</strong> {{ accommodation.studentId }}</p>
+      <p><strong>Start Date:</strong> {{ accommodation.startDate | date:'mediumDate' }}</p>
+      <p><strong>Expiry Date:</strong> {{ accommodation.expiryDate ? (accommodation.expiryDate | date:'mediumDate') : 'N/A' }}</p>
+  
+      <h3 class="housing-unit-heading">Housing Unit Information</h3>
+      <p><strong>Name:</strong> {{ accommodation.housingUnit.name }}</p>
+      <p><strong>Description:</strong> {{ accommodation.housingUnit.description }}</p>
+      <p><strong>Category:</strong> {{ accommodation.housingUnit.category }}</p>
+      <p><strong>Address:</strong> {{ accommodation.housingUnit.address }}, {{ accommodation.housingUnit.city }}, {{ accommodation.housingUnit.zipCode }}</p>
+      <p><strong>Free Spaces:</strong> {{ accommodation.housingUnit.freeSpaces }}</p>
+    </div>
+  
+    <!-- No Accommodation Data (if not loading and no error, but data is null) -->
+    <div *ngIf="!isLoading && !errorMessage && !accommodation" class="no-data-message">
+      <p>No accommodation details found.</p>
+    </div>
+  </div>
+  

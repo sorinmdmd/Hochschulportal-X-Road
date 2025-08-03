@@ -28,8 +28,8 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - ./hsbodata/mongodb-data:/data/db
-      - ./hsbodata/mongodb-config:/data/configdb
+      - ./MongoDB/hsbodata/mongodb-data:/data/db
+      - ./MongoDB/hsbodata/mongodb-config:/data/configdb
       
   akafoewg-mongodb:
     image: docker.io/library/mongo:4.4
@@ -37,8 +37,8 @@ services:
     ports:
       - "27018:27017"
     volumes:
-      - ./akafoewg/mongodb-data:/data/db
-      - ./akafoewg/mongodb-config:/data/configdb
+      - ./MongoDB/akafoewg/mongodb-data:/data/db
+      - ./MongoDB/akafoewg/mongodb-config:/data/configdb
       
   zfarub-mongodb:
     image: docker.io/library/mongo:4.4
@@ -46,8 +46,8 @@ services:
     ports:
       - "27019:27017"
     volumes:
-      - ./zfarub/mongodb-data:/data/db
-      - ./zfarub/mongodb-config:/data/configdb
+      - ./MongoDB/zfarub/mongodb-data:/data/db
+      - ./MongoDB/zfarub/mongodb-config:/data/configdb
       
   keycloak:
     image: quay.io/keycloak/keycloak:24.0.0

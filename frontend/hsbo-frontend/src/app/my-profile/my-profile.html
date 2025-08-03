@@ -1,0 +1,21 @@
+<div class="profile-container" *ngIf="!isLoading && personalInfo; else loadingOrError">
+    <h2>Mein Profil</h2>
+    <div class="profile-item"><strong>Matrikelnummer:</strong> {{ personalInfo.studentId }}</div>
+    <div class="profile-item"><strong>Nationalität:</strong> {{ personalInfo.nationality }}</div>
+    <div class="profile-item"><strong>Geburtsdatum:</strong> {{ personalInfo.dateOfBirth | date }}</div>
+    <div class="profile-item"><strong>Anfangsdatum:</strong> {{ personalInfo.startDate | date }}</div>
+    <div class="profile-item"><strong>Aktuelle Semester:</strong> {{ personalInfo.actualSemester }}</div>
+  
+    <h3>Study Program</h3>
+    <div class="profile-item"><strong>Name:</strong> {{ personalInfo.studyProgram.name }}</div>
+    <div class="profile-item"><strong>Abschluss:</strong> {{ personalInfo.studyProgram.degreeLevel }}</div>
+    <div class="profile-item"><strong>Regelstudienzeit:</strong> {{ personalInfo.studyProgram.numberOfSemesters }}</div>
+    <div class="profile-item"><strong>Studienbereich:</strong> {{ personalInfo.studyProgram.facultyName }}</div>
+    <div class="profile-item"><strong>Campus:</strong> {{ personalInfo.studyProgram.campusName }}</div>
+  </div>
+  
+  <ng-template #loadingOrError>
+    <div *ngIf="isLoading">Loading profile...</div>
+    <div *ngIf="!isLoading && error" class="error">{{ error }}</div>
+  </ng-template>
+  
