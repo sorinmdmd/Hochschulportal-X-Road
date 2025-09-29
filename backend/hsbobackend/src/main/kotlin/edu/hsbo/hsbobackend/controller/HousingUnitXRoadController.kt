@@ -71,7 +71,13 @@ class HousingUnitXRoadController(val xRoadHousingUnitService: HousingUnitXRoadSe
     fun getBooking(): ResponseEntity<String> {
         return xRoadHousingUnitService.getMyBooking()
     }
-
+    /**
+     * Löscht die bestehende Wohnungsbuchung des authentifizierten Studenten über den X-Road-Dienst.
+     * HTTP-Methode: DELETE
+     * Endpunkt: /x-road/housingUnit/
+     * Berechtigung: Nur für Benutzer mit der Rolle 'STUDENT'.
+     * @return Eine ResponseEntity, die eine Bestätigungsnachricht über den Erfolg der Operation als String enthält.
+     */
     @DeleteMapping("/x-road/housingUnit/")
     @PreAuthorize("hasRole('STUDENT')")
     fun delBooking(): ResponseEntity<String> {
