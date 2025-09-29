@@ -1,18 +1,23 @@
 <nav class="header">
   <div class="nav-left">
-    <button routerLink="/">Homepage</button>
-    <button routerLink="/myProfile">Mein Profil</button>
-    <button routerLink="/accomodation"> Studentische Unterkunft</button>
-    <button routerLink="/my-accomodation"> Meine Unterkunfte</button>
-    <button routerLink="/language-courses"> Sprachkursen</button>
-    <button routerLink="/my-language-course"> Meine Sprachkursen</button>
-    <button routerLink="/logs"> Logs von AKAFOE</button>
-  </div>
-  
-  <div class="nav-right">
-    <p *ngIf="isLoggedIn()">Hallo👋 {{name}}, Dein Matrikelnummer: {{studentId}}</p>
+    <a routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="logo">Hochschulportal</a>
     
-    <button *ngIf="!isLoggedIn()" (click)="login()">Login</button>
-    <button *ngIf="isLoggedIn()" (click)="logout()">Logout</button>
+    <a *ngIf="isLoggedIn()" routerLink="/myProfile" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">Mein Profil</a>
+    <a *ngIf="isLoggedIn()" routerLink="/accomodation" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">Unterkunft</a>
+    <a *ngIf="isLoggedIn()" routerLink="/my-accomodation" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">Meine Unterkunft</a>
+    <a *ngIf="isLoggedIn()" routerLink="/language-courses" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">Sprachkurse</a>
+    <a *ngIf="isLoggedIn()" routerLink="/my-language-course" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">Meine Sprachkurse</a>
+    <a *ngIf="isLoggedIn()" routerLink="/logs" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">Logs</a>
+  </div>
+
+  <div class="nav-right">
+    <div *ngIf="isLoggedIn()" class="user-info">
+      Hallo👋 <span class="user-name">{{name}}</span>
+      <span class="divider">|</span>
+      Matrikelnr: {{studentId}}
+    </div>
+    
+    <button *ngIf="!isLoggedIn()" (click)="login()" class="btn btn-primary">Login</button>
+    <button *ngIf="isLoggedIn()" (click)="logout()" class="btn btn-secondary">Logout</button>
   </div>
 </nav>

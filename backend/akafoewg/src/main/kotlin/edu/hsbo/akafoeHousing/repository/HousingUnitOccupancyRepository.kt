@@ -8,4 +8,5 @@ import java.util.Optional
 @Repository
 interface HousingUnitOccupancyRepository: MongoRepository<HousingUnitOccupancy, String> {
     fun findByStudentId(id:String): Optional<HousingUnitOccupancy>
+    fun deleteByStudentId(studentId: String): Long
 }

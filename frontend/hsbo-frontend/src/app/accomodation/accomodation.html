@@ -1,19 +1,49 @@
-<div class="accommodation-container" *ngIf="!isLoading && accommodations.length > 0; else loadingOrError">
-    <h2>Verfügbare Unterkunfte</h2>
-    <div *ngFor="let accommodation of accommodations" class="accommodation-card">
-      <h3>{{ accommodation.name }}</h3>
-      <p class="category"><strong>Kategorie:</strong> {{ accommodation.category }}</p>
-      <p class="description">{{ accommodation.description }}</p>
-      <p><strong>Addresse:</strong> {{ accommodation.address }}, {{ accommodation.zipCode }} {{ accommodation.city }}</p>
-      <p><strong>Verfügbare Plätze:</strong> {{ accommodation.freeSpaces }}</p>
-      <button (click)="startHousingUnitBooking(accommodation.id)">Unterkunft Buchen</button>
+<div class="list-container">
+
+  <h2>Verfügbare Unterkünfte</h2>
+  
+  <div *ngIf="isLoading || error || postStatusMessage" class="status-container">
+    <div *ngIf="isLoading" class="loader">Unterkünfte laden...</div>
+    <div *ngIf="error" class="message-box error">
+      <strong>Fehler:</strong> {{ error }}
     </div>
-  
-    <p *ngIf="postStatusMessage" class="status-message">{{ postStatusMessage }}</p>
+    <div *ngIf="postStatusMessage" class="message-box success">
+      {{ postStatusMessage }}
+    </div>
   </div>
-  
-  <ng-template #loadingOrError>
-    <div *ngIf="isLoading">Unterkunfte laden...</div>
-    <div *ngIf="!isLoading && error" class="error">{{ error }}</div>
-  </ng-template>
-  
+
+  <div *ngIf="!isLoading && !error && accommodations.length > 0" class="accommodations-list">
+    
+    <div *ngFor="let accommodation of accommodations" class="accommodation-card">
+      
+      <header class="card-header">
+        <h3>{{ accommodation.name }}</h3>
+        <span class="category-tag">{{ accommodation.category }}</span>
+      </header>
+      
+      <section class="card-content">
+        <p class="description">{{ accommodation.description }}</p>
+        
+        <div class="details-grid">
+          <span class="grid-label">Adresse</span>
+          <span class="grid-value">{{ accommodation.address }}, {{ accommodation.zipCode }} {{ accommodation.city }}</span>
+          
+          <span class="grid-label">Freie Plätze</span>
+          <span class="grid-value">{{ accommodation.freeSpaces }}</span>
+        </div>
+      </section>
+      
+      <footer class="card-footer">
+        <button (click)="startHousingUnitBooking(accommodation.id)">Unterkunft Buchen</button>
+      </footer>
+      
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading && !error && accommodations.length === 0" class="status-container">
+      <div class="message-box info">
+          <p>Derzeit sind keine Unterkünfte verfügbar.</p>
+      </div>
+  </div>
+
+</div>

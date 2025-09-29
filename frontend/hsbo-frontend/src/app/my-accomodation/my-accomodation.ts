@@ -29,39 +29,55 @@ interface Accommodation {
   styleUrl: './my-accomodation.css'
 })
 export class MyAccomodation {
-// Property to hold the fetched accommodation data
 accommodation: Accommodation | null = null;
-// Property to handle loading state
 isLoading: boolean = true;
-// Property to handle error messages
 errorMessage: string | null = null;
+isDeleting: boolean = false;
 
-// Inject HttpClient in the constructor
 constructor(private http: HttpClient) {}
 
-// ngOnInit is called after Angular initializes the component's data-bound properties
 ngOnInit(): void {
   this.fetchAccommodation();
 }
 
-/**
- * Fetches accommodation data from the API.
- */
 fetchAccommodation(): void {
-  this.isLoading = true; // Set loading to true before the request
-  this.errorMessage = null; // Clear any previous error messages
+  this.isLoading = true;
+  this.errorMessage = null;
   const apiUrl = 'http://localhost:8085/api/x-road/housingUnit/getMyBooking';
 
   this.http.get<Accommodation>(apiUrl).subscribe({
     next: (data) => {
       this.accommodation = data;
-      this.isLoading = false; // Set loading to false on success
-      console.log('Accommodation data fetched:', this.accommodation);
+      this.isLoading = false;
     },
     error: (error) => {
       console.error('Error fetching accommodation:', error);
       this.errorMessage = 'Failed to load accommodation data. Please try again later.';
-      this.isLoading = false; // Set loading to false on error
+      this.isLoading = false; 
+    }
+  });
+}
+
+ deleteBooking(): void {
+  if (!confirm('Sind Sie sicher, dass Sie diese Buchung löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.')) {
+    return;
+  }
+
+  this.isDeleting = true;
+  this.errorMessage = null;
+  const url = 'http://localhost:8085/api/x-road/housingUnit/';
+
+  this.http.delete(url, { responseType: 'text' }).subscribe({
+    next: (response) => {
+      this.accommodation = null;
+    },
+    error: (err) => {
+      console.error('Error deleting booking:', err);
+      this.errorMessage = 'Failed to delete the booking. Please try again.';
+      this.isDeleting = false; 
+    },
+    complete: () => {
+      this.isDeleting = false; 
     }
   });
 }

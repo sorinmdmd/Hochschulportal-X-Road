@@ -7,46 +7,49 @@ import org.springframework.stereotype.Service
 import java.util.Optional
 
 @Service
-class HousingUnitService(val housingUnitRepository: HousingUnitRepository, val housingUnitOccupancyRepository: HousingUnitOccupancyRepository) {
+class HousingUnitService(
+    val housingUnitRepository: HousingUnitRepository,
+    val housingUnitOccupancyRepository: HousingUnitOccupancyRepository
+) {
 
     /**
-     * Adds a new HousingUnit to the database.
-     * @param HousingUnit The HousingUnit object to be added.
-     * @return The saved HousingUnit object.
+     * Fügt eine neue Wohneinheit (HousingUnit) zur Datenbank hinzu.
+     * @param housingUnit Das hinzuzufügende HousingUnit-Objekt.
+     * @return Das gespeicherte HousingUnit-Objekt.
      */
     fun addHousingUnit(housingUnit: HousingUnit): HousingUnit {
         return housingUnitRepository.save(housingUnit)
     }
 
     /**
-     * Retrieves all HousingUnits from the database.
-     * @return A list of all HousingUnit objects.
+     * Ruft alle Wohneinheiten aus der Datenbank ab.
+     * @return Eine Liste aller HousingUnit-Objekte.
      */
     fun getAllHousingUnits(): List<HousingUnit> {
         return housingUnitRepository.findAll()
     }
 
     /**
-     * Retrieves a HousingUnit by its ID.
-     * @param id The ID of the HousingUnit to retrieve.
-     * @return An Optional containing the HousingUnit if found, or empty if not.
+     * Ruft eine Wohneinheit anhand ihrer ID ab.
+     * @param id Die ID der abzurufenden Wohneinheit.
+     * @return Ein Optional, das die Wohneinheit enthält, falls gefunden, andernfalls leer.
      */
     fun getHousingUnitById(id: String): Optional<HousingUnit> {
         return housingUnitRepository.findById(id)
     }
 
     /**
-     * Updates an existing HousingUnit.
-     * @param id The ID of the HousingUnit to update.
-     * @param updatedHousingUnit The HousingUnit object containing the updated data.
-     * @return The updated HousingUnit object, or null if the HousingUnit with the given ID was not found.
+     * Aktualisiert eine bestehende Wohneinheit.
+     * @param id Die ID der zu aktualisierenden Wohneinheit.
+     * @param updatedHousingUnit Das HousingUnit-Objekt mit den aktualisierten Daten.
+     * @return Das aktualisierte HousingUnit-Objekt, oder null, falls keine Wohneinheit mit der angegebenen ID gefunden wurde.
      */
     fun updateHousingUnit(id: String, updatedHousingUnit: HousingUnit): HousingUnit? {
         val existingHousingUnitOptional = housingUnitRepository.findById(id)
         return if (existingHousingUnitOptional.isPresent) {
             val existingHousingUnit = existingHousingUnitOptional.get()
-            // Create a new HousingUnit object with the existing ID and updated fields
-            // This ensures the ID remains the same while other fields are updated
+            // Erstellt ein neues HousingUnit-Objekt mit der bestehenden ID und den aktualisierten Feldern.
+            // Dies stellt sicher, dass die ID gleich bleibt, während andere Felder aktualisiert werden.
             val housingUnitToSave = existingHousingUnit.copy(
                 name = updatedHousingUnit.name,
                 description = updatedHousingUnit.description,
@@ -58,14 +61,14 @@ class HousingUnitService(val housingUnitRepository: HousingUnitRepository, val h
             )
             housingUnitRepository.save(housingUnitToSave)
         } else {
-            null // Return null if the HousingUnit does not exist
+            null // Gibt null zurück, wenn die Wohneinheit nicht existiert
         }
     }
 
     /**
-     * Deletes a HousingUnit by its ID.
-     * @param id The ID of the HousingUnit to delete.
-     * @return True if the HousingUnit was deleted, false otherwise.
+     * Löscht eine Wohneinheit anhand ihrer ID.
+     * @param id Die ID der zu löschenden Wohneinheit.
+     * @return True, wenn die Wohneinheit gelöscht wurde, andernfalls false.
      */
     fun deleteHousingUnit(id: String): Boolean {
         return if (housingUnitRepository.existsById(id)) {

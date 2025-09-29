@@ -1,64 +1,152 @@
 /* my-accomodation.css */
+
+/* Definition eines modernen Farbschemas und von Schriftarten */
+:root {
+  --primary-text: #212529;
+  --secondary-text: #6c757d;
+  --card-bg: #ffffff;
+  --card-border: #dee2e6;
+  --page-bg: #f8f9fa;
+  --danger-color: #dc3545;
+  --danger-hover-color: #c82333;
+  --disabled-color: #ced4da;
+  --info-bg: #eef7ff;
+  --info-border: #d1e7fd;
+  --info-text: #055160;
+  --error-bg: #f8d7da;
+  --error-border: #f5c2c7;
+  --error-text: #842029;
+}
+
 .accommodation-container {
-    font-family: Arial, sans-serif;
-    padding: 20px;
-    max-width: 800px;
-    margin: 20px auto;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    background-color: #f9f9f9;
-  }
-  
-  h2 {
-    color: #333;
-    text-align: center;
-    margin-bottom: 25px;
-  }
-  
-  h3 {
-    color: #555;
-    margin-top: 20px;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 5px;
-  }
-  
-  .accommodation-details p {
-    margin-bottom: 8px;
-    line-height: 1.5;
-  }
-  
-  .accommodation-details strong {
-    color: #333;
-  }
-  
-  .loading-message, .error-message, .no-data-message {
-    text-align: center;
-    padding: 15px;
-    border-radius: 5px;
-    margin-top: 20px;
-  }
-  
-  .loading-message {
-    background-color: #e0f7fa;
-    color: #00796b;
-    border: 1px solid #00bcd4;
-  }
-  
-  .error-message {
-    background-color: #ffebee;
-    color: #d32f2f;
-    border: 1px solid #ef5350;
-  }
-  
-  .no-data-message {
-    background-color: #fffde7;
-    color: #fbc02d;
-    border: 1px solid #ffeb3b;
-  }
-  
-  .housing-unit-heading {
-    margin-top: 30px;
-  }
-  
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: var(--card-bg);
+  max-width: 800px;
+  margin: 40px auto;
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  overflow: hidden; /* Sorgt dafür, dass innere Elemente die abgerundeten Ecken respektieren */
+}
+
+.card-header {
+  padding: 20px 24px;
+  background-color: var(--page-bg);
+  border-bottom: 1px solid var(--card-border);
+}
+
+.card-header h2 {
+  margin: 0;
+  font-size: 1.5em;
+  color: var(--primary-text);
+  text-align: left;
+}
+
+.accommodation-content {
+  padding: 24px;
+}
+
+.details-section h3 {
+  font-size: 1.1em;
+  color: var(--secondary-text);
+  margin-top: 0;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Das Grid für die Detail-Anzeige */
+.details-grid {
+  display: grid;
+  grid-template-columns: 180px 1fr; /* Feste Spalte für Labels */
+  gap: 12px 16px;
+  line-height: 1.6;
+}
+
+.grid-label {
+  font-weight: 600;
+  color: var(--primary-text);
+}
+
+.grid-value {
+  color: var(--secondary-text);
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid var(--card-border);
+  margin: 24px 0;
+}
+
+.card-footer {
+  padding: 16px 24px;
+  /* Die Hintergrundfarbe wurde entfernt */
+  border-top: 1px solid var(--card-border);
+  text-align: right;
+}
+
+/* Verbesserter Button-Stil */
+.delete-button {
+  padding: 10px 20px;
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.95em;
+}
+
+.delete-button:hover:not(:disabled) {
+  background-color: red;
+  transform: translateY(-1px);
+}
+
+.delete-button:disabled {
+  background-color: red;
+  cursor: not-allowed;
+  color: var(--secondary-text);
+}
+
+/* Verbesserte Status- und Nachrichtenanzeige */
+.status-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 250px;
+  padding: 24px;
+}
+
+.message-box {
+  text-align: center;
+  padding: 16px 24px;
+  border-radius: 8px;
+  border: 1px solid;
+  width: 100%;
+}
+
+.message-box.info {
+  background-color: var(--info-bg);
+  border-color: var(--info-border);
+  color: var(--info-text);
+}
+
+.message-box.error {
+  background-color: var(--error-bg);
+  border-color: var(--error-border);
+  color: var(--error-text);
+}
+
+.loader {
+  border: 4px solid #e9ecef;
+  border-top: 4px solid var(--primary-text);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

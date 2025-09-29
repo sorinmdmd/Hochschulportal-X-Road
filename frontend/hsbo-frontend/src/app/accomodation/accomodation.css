@@ -1,51 +1,155 @@
-.accommodation-container {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 16px;
-  }
-  
-  .accommodation-card {
-    background-color: #f1f1f1;
-    padding: 12px;
-    margin-bottom: 16px;
-    border-radius: 6px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  }
-  
-  .accommodation-card h3 {
-    margin-top: 0;
-  }
-  
-  .accommodation-card .category {
-    font-style: italic;
-    color: #555;
-  }
-  
-  .accommodation-card .description {
-    margin: 8px 0;
-  }
-  
-  button {
-    background-color: #007bff;
-    border: none;
-    color: white;
-    padding: 8px 16px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
-  .status-message {
-    margin-top: 20px;
-    font-weight: bold;
-    color: green;
-  }
-  
-  .error {
-    color: red;
-    text-align: center;
-  }
-  
+/* Wiederverwendete Farbvariablen für einen konsistenten Look */
+:root {
+  --primary-color: #007bff;
+  --primary-hover-color: #0056b3;
+  --primary-text: #212529;
+  --secondary-text: #6c757d;
+  --card-bg: #ffffff;
+  --card-border: #dee2e6;
+  --page-bg: #f8f9fa;
+  --success-bg: #d1e7dd;
+  --success-border: #badbcc;
+  --success-text: #0f5132;
+  --info-bg: #eef7ff;
+  --info-border: #d1e7fd;
+  --info-text: #055160;
+  --error-bg: #f8d7da;
+  --error-border: #f5c2c7;
+  --error-text: #842029;
+}
+
+/* Hauptcontainer für die Liste */
+.list-container {
+  max-width: 800px;
+  margin: 40px auto;
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+.list-container h2 {
+  font-size: 1.8em;
+  color: var(--primary-text);
+  margin-bottom: 24px;
+}
+
+/* Styling für jede einzelne Unterkunftskarte */
+.accommodation-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  margin-bottom: 24px;
+  overflow: hidden; /* Wichtig für die abgerundeten Ecken */
+  display: flex;
+  flex-direction: column;
+}
+
+.card-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--card-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-header h3 {
+  margin: 0;
+  font-size: 1.25em;
+  color: var(--primary-text);
+}
+
+.category-tag {
+  background-color: var(--page-bg);
+  color: var(--secondary-text);
+  padding: 4px 10px;
+  border-radius: 16px;
+  font-size: 0.8em;
+  font-weight: 500;
+}
+
+.card-content {
+  padding: 20px;
+  flex-grow: 1; /* Sorgt dafür, dass der Inhalt den verfügbaren Platz füllt */
+}
+
+.description {
+  color: var(--secondary-text);
+  line-height: 1.6;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 8px 16px;
+}
+
+.grid-label {
+  font-weight: 600;
+  color: var(--primary-text);
+}
+
+.grid-value {
+  color: var(--secondary-text);
+}
+
+.card-footer {
+  padding: 12px 20px;
+  background-color: var(--page-bg);
+  border-top: 1px solid var(--card-border);
+  text-align: right;
+}
+
+button {
+  background-color: lightblue;
+  color: black;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+button:hover {
+  background-color: rgb(77, 77, 209);
+}
+
+/* Wiederverwendete Stile für Status-, Lade- und Fehlermeldungen */
+.status-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  min-height: 150px;
+}
+
+.message-box {
+  text-align: center;
+  padding: 16px 24px;
+  border-radius: 8px;
+  border: 1px solid;
+  width: 100%;
+}
+
+.message-box.success {
+  background-color: var(--success-bg);
+  border-color: var(--success-border);
+  color: var(--success-text);
+}
+
+.message-box.info {
+  background-color: var(--info-bg);
+  border-color: var(--info-border);
+  color: var(--info-text);
+}
+
+.message-box.error {
+  background-color: var(--error-bg);
+  border-color: var(--error-border);
+  color: var(--error-text);
+}
+
+.loader {
+  color: var(--secondary-text);
+}

@@ -23,26 +23,21 @@ import java.util.concurrent.TimeUnit
 class HousingUnitOccupancyController(val housingUnitOccupancyService: HousingUnitOccupancyService) {
 
     /**
-     * Endpoint to create a new HousingUnitActive entry.
-     * Endpoint to create a new HousingUnitActive entry.
-     * POST /api/HousingUnit-actives
-     * @param uniId The university ID or similar identifier for the person occupying the space (from request parameter).
-     * @param HousingUnitId The ID of the HousingUnit to associate with this active entry (from request parameter).
-     * @param startDate The start date of the active entry (from request parameter).
-     * @param expiryDate The optional expiry date of the active entry (from request parameter).
-     *
-     * Example POST URL with query parameters:
-     * http://localhost:8080/api/HousingUnit-actives?uniId=student123&HousingUnitId=654321abcdef&startDate=2023-01-15T10:00:00.000Z
-     *
-     * @return ResponseEntity with the created HousingUnitActive and HTTP status 201 (Created),
-     * or 400 (Bad Request) if input is invalid, or 404 (Not Found) if HousingUnit not found/no spaces.
+     * Endpunkt zum Erstellen eines neuen Belegungseintrags für eine Wohneinheit.
+     * POST /api/housingUnitActivate/{uniId}/{housingUnitId}/{startDate}
+     * @param uniId Die ID des Studenten (aus der Pfadvariable).
+     * @param housingUnitId Die ID der Wohneinheit (aus der Pfadvariable).
+     * @param startDate Das Startdatum der Belegung (aus der Pfadvariable).
+     * @param expiryDate Das optionale Enddatum der Belegung (aus dem Query-Parameter).
+     * @return ResponseEntity mit dem erstellten Belegungseintrag und dem HTTP-Status 201 (Created),
+     * oder 400 (Bad Request), falls die Eingabe ungültig ist.
      */
     @PostMapping("/housingUnitActivate/{uniId}/{housingUnitId}/{startDate}")
     fun createHousingUnitActive(
         @PathVariable uniId: String,
         @PathVariable housingUnitId: String,
         @PathVariable startDate: Instant,
-        @RequestParam(required = false) expiryDate: Instant? // still optional as query parameter if desired
+        @RequestParam(required = false) expiryDate: Instant?
     ): ResponseEntity<HousingUnitOccupancy> {
         val createdHousingUnitActive = housingUnitOccupancyService.createHouseUnitOccupancy(
             uniId,
@@ -59,9 +54,9 @@ class HousingUnitOccupancyController(val housingUnitOccupancyService: HousingUni
 
 
     /**
-     * Endpoint to get all HousingUnitActive entries.
-     * GET /api/HousingUnit-actives
-     * @return ResponseEntity with a list of all HousingUnitActive entries and HTTP status 200 (OK).
+     * Endpunkt zum Abrufen aller Belegungseinträge.
+     * GET /api/housingUnitOccupancy
+     * @return ResponseEntity mit einer Liste aller Belegungseinträge und dem HTTP-Status 200 (OK).
      */
     @GetMapping("/housingUnitOccupancy")
     fun getAllHousingUnitActives(): ResponseEntity<List<HousingUnitOccupancy>> {
@@ -70,11 +65,11 @@ class HousingUnitOccupancyController(val housingUnitOccupancyService: HousingUni
     }
 
     /**
-     * Endpoint to get a HousingUnitActive entry by its ID.
-     * GET /api/HousingUnit-actives/{id}
-     * @param id The ID of the HousingUnitActive to retrieve (from path variable).
-     * @return ResponseEntity with the HousingUnitActive and HTTP status 200 (OK) if found,
-     * or HTTP status 404 (Not Found) if not found.
+     * Endpunkt zum Abrufen eines Belegungseintrags anhand seiner ID.
+     * GET /api/housingUnitOccupancy/{id}
+     * @param id Die ID des abzurufenden Eintrags (aus der Pfadvariable).
+     * @return ResponseEntity mit dem gefundenen Eintrag und dem HTTP-Status 200 (OK),
+     * oder dem HTTP-Status 404 (Not Found), falls nicht gefunden.
      */
     @GetMapping("/housingUnitOccupancy/{id}")
     fun getHousingUnitActiveById(@PathVariable id: String): ResponseEntity<HousingUnitOccupancy> {
@@ -87,12 +82,12 @@ class HousingUnitOccupancyController(val housingUnitOccupancyService: HousingUni
     }
 
     /**
-     * Endpoint to update an existing HousingUnitActive entry.
-     * PUT /api/HousingUnit-actives/{id}
-     * @param id The ID of the HousingUnitActive to update (from path variable).
-     * @param updatedHousingUnitOccupancy The HousingUnitActive object with updated data (from request body).
-     * @return ResponseEntity with the updated HousingUnitActive and HTTP status 200 (OK) if successful,
-     * or HTTP status 404 (Not Found) if the HousingUnitActive was not found.
+     * Endpunkt zum Aktualisieren eines bestehenden Belegungseintrags.
+     * PUT /api/housingUnitOccupancy/{id}
+     * @param id Die ID des zu aktualisierenden Eintrags (aus der Pfadvariable).
+     * @param updatedHousingUnitOccupancy Das Objekt mit den aktualisierten Daten (aus dem Request Body).
+     * @return ResponseEntity mit dem aktualisierten Eintrag und dem HTTP-Status 200 (OK),
+     * oder dem HTTP-Status 404 (Not Found), falls der Eintrag nicht gefunden wurde.
      */
     @PutMapping("/housingUnitOccupancy/{id}")
     fun updateHousingUnitActive(
@@ -108,33 +103,36 @@ class HousingUnitOccupancyController(val housingUnitOccupancyService: HousingUni
     }
 
     /**
-     * Endpoint to delete a HousingUnitActive entry.
-     * DELETE /api/HousingUnit-actives/{id}
-     * @param id The ID of the HousingUnitActive to delete (from path variable).
-     * @return ResponseEntity with HTTP status 204 (No Content) if deleted successfully,
-     * or HTTP status 404 (Not Found) if the HousingUnitActive was not found.
+     * Endpunkt zum Löschen eines Belegungseintrags anhand seiner ID.
+     * DELETE /api/housingUnitOccupancy/{id}
+     * @param id Die ID des zu löschenden Eintrags (aus der Pfadvariable).
+     * @return ResponseEntity mit dem HTTP-Status 204 (No Content), falls erfolgreich gelöscht,
+     * oder dem HTTP-Status 404 (Not Found), falls der Eintrag nicht gefunden wurde.
      */
-    @DeleteMapping("/housingUnitOccupancy/{id}")
-    fun deleteHousingUnitActive(@PathVariable id: String): ResponseEntity<Void> {
-        return if (housingUnitOccupancyService.deleteHouseUnitOccupancy(id)) {
+    @DeleteMapping("/housingUnitOccupancy/{studentId}")
+    fun deleteHousingUnitActive(@PathVariable studentId: String): ResponseEntity<Void> {
+        return if (housingUnitOccupancyService.deleteHouseUnitOccupancy(studentId)) {
             ResponseEntity(HttpStatus.NO_CONTENT)
         } else {
             ResponseEntity(HttpStatus.NOT_FOUND)
         }
     }
 
+    /**
+     * Endpunkt zum Abrufen eines Belegungseintrags anhand der Studenten-ID.
+     * GET /api/housingUnitOccupancyByStudentId/{studentId}
+     * @param studentId Die ID des Studenten (aus der Pfadvariable).
+     * @return ResponseEntity mit dem gefundenen Belegungseintrag und HTTP-Status 200 (OK),
+     * oder 404 (Not Found), wenn kein Eintrag für diesen Studenten existiert.
+     */
     @GetMapping("/housingUnitOccupancyByStudentId/{studentId}")
     fun getOccupancyByStudentId(@PathVariable studentId: String): ResponseEntity<HousingUnitOccupancy> {
         val optionalOccupancy = housingUnitOccupancyService.getHouseOccupancyByStudentId(studentId)
 
         return if (optionalOccupancy.isPresent) {
-            // If an occupancy is found, return it with 200 OK
             ResponseEntity.ok(optionalOccupancy.get())
         } else {
-            // If no occupancy is found, return 404 Not Found
             ResponseEntity.notFound().build()
-            // Or you could return 204 No Content if you prefer for an empty response body
-            // ResponseEntity.noContent().build()
         }
     }
 }
