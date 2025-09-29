@@ -47,6 +47,16 @@ startBackendsandFrontend.bat
 
 ---
 
+## Keycloak Credentials
+
+- **Username:** `ad`
+- **Password:** `ad`
+
+## Demo Student Credentials
+
+- **Username:** `sorin`
+- **Password:** `1`
+
 ## Notes
 
 Make sure Docker is running and all required ports are available before starting the containers.

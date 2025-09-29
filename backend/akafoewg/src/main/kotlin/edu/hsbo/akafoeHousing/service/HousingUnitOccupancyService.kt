@@ -12,14 +12,14 @@ class HousingUnitOccupancyService(
     val housingUnitService: HousingUnitService
 ) {
     /**
-     * Creates a new HouseUnitOccupancy entry.
-     * Decrements the freeSpaces in the associated WG document.
+     * Erstellt einen neuen Belegungseintrag (HouseUnitOccupancy).
+     * Verringert die Anzahl der freien Plätze ('freeSpaces') im zugehörigen Wohneinheit-Dokument.
      *
-     * @param studentId The university ID or similar identifier for the person occupying the space.
-     * @param housingUnitId The ID of the WG to associate with this active entry.
-     * @param startDate The start date of the active entry.
-     * @param expiryDate The optional expiry date of the active entry.
-     * @return The created HouseUnitOccupancy object, or null if the associated WG is not found or has no free spaces.
+     * @param studentId Die ID des Studenten, der den Platz belegt.
+     * @param housingUnitId Die ID der Wohneinheit, die mit diesem Eintrag verknüpft ist.
+     * @param startDate Das Startdatum des Belegungseintrags.
+     * @param expiryDate Das optionale Ablaufdatum des Eintrags.
+     * @return Das erstellte HouseUnitOccupancy-Objekt, oder null, falls die zugehörige Wohneinheit nicht gefunden wurde oder keine freien Plätze hat.
      */
     fun createHouseUnitOccupancy(
         studentId: String,
@@ -27,88 +27,93 @@ class HousingUnitOccupancyService(
         startDate: Instant,
         expiryDate: Instant? = null
     ): HousingUnitOccupancy? {
-        // Basic validation for required fields
+        // Grundlegende Validierung der erforderlichen Felder
         if (studentId.isBlank()) {
-            println("Error: uniId is required for HouseUnitOccupancy creation.")
+            println("Fehler: studentId wird für die Erstellung von HouseUnitOccupancy benötigt.")
             return null
         }
         if (housingUnitId.isBlank()) {
-            println("Error: WG ID is required for HouseUnitOccupancy creation.")
+            println("Fehler: Wohneinheit-ID wird für die Erstellung von HouseUnitOccupancy benötigt.")
             return null
         }
-        if(housingUnitOccupancyRepository.findByStudentId(studentId).isPresent) {
-            println("Error: A HousingUnitOccupancy already exists for student ID '$studentId'.")
+        if (housingUnitOccupancyRepository.findByStudentId(studentId).isPresent) {
+            println("Fehler: Eine HousingUnitOccupancy existiert bereits für die Studenten-ID '$studentId'.")
             return null
         }
 
-        // Fetch the associated WG document
+        // Das zugehörige Wohneinheit-Dokument abrufen
         val housingUnitOptional = housingUnitService.getHousingUnitById(housingUnitId)
         if (housingUnitOptional.isPresent) {
             val housingUnit = housingUnitOptional.get()
 
-            // Check if there are free spaces
+            // Überprüfen, ob freie Plätze vorhanden sind
             if (housingUnit.freeSpaces > 0) {
-                // Decrement freeSpaces in the WG
+                // 'freeSpaces' in der Wohneinheit dekrementieren
                 val updatedHousingUnit = housingUnit.copy(freeSpaces = housingUnit.freeSpaces - 1)
-                housingUnit.id?.let { housingUnitService.updateHousingUnit(it, updatedHousingUnit) } // Update the WG document
+                housingUnit.id?.let {
+                    housingUnitService.updateHousingUnit(
+                        it,
+                        updatedHousingUnit
+                    )
+                } // Das Wohneinheit-Dokument aktualisieren
 
-                // Create the HouseUnitOccupancy object with the provided parameters and the updated WG reference
+                // Das HouseUnitOccupancy-Objekt mit den übergebenen Parametern und der aktualisierten Referenz erstellen
                 val newHousingUnitOccupancy = HousingUnitOccupancy(
                     studentId = studentId,
                     startDate = startDate,
                     expiryDate = expiryDate,
-                    housingUnit = updatedHousingUnit // Associate the updated WG object
+                    housingUnit = updatedHousingUnit // Das aktualisierte Wohneinheit-Objekt zuweisen
                 )
                 return housingUnitOccupancyRepository.save(newHousingUnitOccupancy)
             } else {
-                println("Error: WG '${housingUnit.name}' (ID: $housingUnitId) has no free spaces.")
+                println("Fehler: Wohneinheit '${housingUnit.name}' (ID: $housingUnitId) hat keine freien Plätze.")
                 return null
             }
         } else {
-            println("Error: Associated WG with ID '$housingUnitId' not found.")
+            println("Fehler: Zugehörige Wohneinheit mit ID '$housingUnitId' nicht gefunden.")
             return null
         }
     }
 
     /**
-     * Retrieves all HouseUnitOccupancy entries.
-     * @return A list of all HouseUnitOccupancy objects.
+     * Ruft alle Belegungseinträge (HouseUnitOccupancy) ab.
+     * @return Eine Liste aller HouseUnitOccupancy-Objekte.
      */
     fun getAllHouseUnitOccupancies(): List<HousingUnitOccupancy> {
         return housingUnitOccupancyRepository.findAll()
     }
 
     /**
-     * Retrieves a HouseUnitOccupancy entry by its ID.
-     * @param id The ID of the HouseUnitOccupancy to retrieve.
-     * @return An Optional containing the HouseUnitOccupancy if found, or empty if not.
+     * Ruft einen Belegungseintrag (HouseUnitOccupancy) anhand seiner ID ab.
+     * @param id Die ID des abzurufenden Eintrags.
+     * @return Ein Optional, das den HouseUnitOccupancy-Eintrag enthält, falls gefunden, andernfalls leer.
      */
     fun getHouseUnitOccupancyById(id: String): Optional<HousingUnitOccupancy> {
         return housingUnitOccupancyRepository.findById(id)
     }
 
     /**
-     * Updates an existing HouseUnitOccupancy entry.
-     * Note: This method does NOT automatically update freeSpaces in the WG based on changes
-     * to the associated WG. If the associated WG changes, freeSpaces logic needs to be
-     * handled carefully in the controller or a separate service method.
+     * Aktualisiert einen bestehenden Belegungseintrag (HouseUnitOccupancy).
+     * Hinweis: Diese Methode aktualisiert NICHT automatisch die freien Plätze ('freeSpaces') in der Wohneinheit
+     * basierend auf Änderungen. Wenn die zugehörige Wohneinheit geändert wird, muss die Logik
+     * für die freien Plätze sorgfältig im Controller oder einer separaten Service-Methode behandelt werden.
      *
-     * @param id The ID of the HouseUnitOccupancy to update.
-     * @param updatedHousingUnitOccupancy The HouseUnitOccupancy object with updated data.
-     * @return The updated HouseUnitOccupancy object, or null if the HouseUnitOccupancy with the given ID was not found.
+     * @param id Die ID des zu aktualisierenden Eintrags.
+     * @param updatedHousingUnitOccupancy Das HouseUnitOccupancy-Objekt mit den aktualisierten Daten.
+     * @return Das aktualisierte HouseUnitOccupancy-Objekt, oder null, falls kein Eintrag mit der gegebenen ID gefunden wurde.
      */
     fun updateHouseUnitOccupancy(id: String, updatedHousingUnitOccupancy: HousingUnitOccupancy): HousingUnitOccupancy? {
         val existingHouseUnitOccupancyOptional = housingUnitOccupancyRepository.findById(id)
         return if (existingHouseUnitOccupancyOptional.isPresent) {
             val existingHouseUnitOccupancy = existingHouseUnitOccupancyOptional.get()
 
-            // For a simple update, we just copy the fields.
-            // Note: The @DocumentReference 'wg' field will be updated if provided in updatedHouseUnitOccupancy.
+            // Für ein einfaches Update kopieren wir einfach die Felder.
+            // Hinweis: Das @DocumentReference 'housingUnit'-Feld wird aktualisiert, wenn es in updatedHouseUnitOccupancy vorhanden ist.
             val houseUnitOccupancyToSave = existingHouseUnitOccupancy.copy(
                 studentId = updatedHousingUnitOccupancy.studentId,
                 startDate = updatedHousingUnitOccupancy.startDate,
                 expiryDate = updatedHousingUnitOccupancy.expiryDate,
-                housingUnit = updatedHousingUnitOccupancy.housingUnit // Update the reference if provided
+                housingUnit = updatedHousingUnitOccupancy.housingUnit // Die Referenz aktualisieren, falls vorhanden
             )
             housingUnitOccupancyRepository.save(houseUnitOccupancyToSave)
         } else {
@@ -117,14 +122,14 @@ class HousingUnitOccupancyService(
     }
 
     /**
-     * Deletes a HouseUnitOccupancy entry.
-     * Increments the freeSpaces in the associated WG document.
+     * Löscht einen Belegungseintrag (HouseUnitOccupancy).
+     * Erhöht die Anzahl der freien Plätze ('freeSpaces') im zugehörigen Wohneinheit-Dokument.
      *
-     * @param id The ID of the HouseUnitOccupancy to delete.
-     * @return True if the HouseUnitOccupancy was deleted and WG freeSpaces updated, false otherwise.
+     * @param id Die ID des zu löschenden Eintrags.
+     * @return True, wenn der Eintrag gelöscht und die freien Plätze aktualisiert wurden, andernfalls false.
      */
-    fun deleteHouseUnitOccupancy(id: String): Boolean {
-        val houseUnitOccupancyOptional = housingUnitOccupancyRepository.findById(id)
+    fun deleteHouseUnitOccupancy(studentId: String): Boolean {
+        val houseUnitOccupancyOptional = housingUnitOccupancyRepository.findByStudentId(studentId)
         if (houseUnitOccupancyOptional.isPresent) {
             val houseUnitOccupancy = houseUnitOccupancyOptional.get()
             val housingUnitId = houseUnitOccupancy.housingUnit?.id
@@ -133,24 +138,35 @@ class HousingUnitOccupancyService(
                 val wgOptional = housingUnitService.getHousingUnitById(housingUnitId)
                 if (wgOptional.isPresent) {
                     val wg = wgOptional.get()
-                    // Increment freeSpaces in the WG
+                    // 'freeSpaces' in der Wohneinheit inkrementieren
                     val updatedWG = wg.copy(freeSpaces = wg.freeSpaces + 1)
-                    wg.id?.let { housingUnitService.updateHousingUnit(it, updatedWG) } // Update the WG document
+                    wg.id?.let {
+                        housingUnitService.updateHousingUnit(
+                            it,
+                            updatedWG
+                        )
+                    } // Das Wohneinheit-Dokument aktualisieren
                 } else {
-                    println("Warning: Associated WG with ID '$housingUnitId' not found during HouseUnitOccupancy deletion. Free spaces not updated.")
+                    println("Warnung: Zugehörige Wohneinheit mit ID '$housingUnitId' wurde beim Löschen der HouseUnitOccupancy nicht gefunden. Freie Plätze nicht aktualisiert.")
                 }
             } else {
-                println("Warning: HouseUnitOccupancy '${houseUnitOccupancy.id}' has no associated WG ID. Free spaces not updated.")
+                println("Warnung: HouseUnitOccupancy '${houseUnitOccupancy.id}' hat keine zugehörige Wohneinheit-ID. Freie Plätze nicht aktualisiert.")
             }
 
-            housingUnitOccupancyRepository.deleteById(id)
+            housingUnitOccupancyRepository.deleteByStudentId(studentId)
             return true
         } else {
-            println("Error: HouseUnitOccupancy with ID '$id' not found for deletion.")
+            println("Fehler: HouseUnitOccupancy mit ID '$studentId' zum Löschen nicht gefunden.")
             return false
         }
     }
-    fun getHouseOccupancyByStudentId(studentId: String): Optional<HousingUnitOccupancy>{
-       return  housingUnitOccupancyRepository.findByStudentId(studentId)
+
+    /**
+     * Ruft einen Belegungseintrag anhand der Studenten-ID ab.
+     * @param studentId Die ID des Studenten.
+     * @return Ein Optional, das den Belegungseintrag enthält, falls einer für den Studenten existiert.
+     */
+    fun getHouseOccupancyByStudentId(studentId: String): Optional<HousingUnitOccupancy> {
+        return housingUnitOccupancyRepository.findByStudentId(studentId)
     }
 }

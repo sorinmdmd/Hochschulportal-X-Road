@@ -1,35 +1,65 @@
 <div class="accommodation-container">
-    <h2>My Accommodation Details</h2>
   
-    <!-- Loading State -->
-    <div *ngIf="isLoading" class="loading-message">
-      <p>Loading accommodation data...</p>
+  <header class="card-header">
+    <h2>Meine Buchung</h2>
+  </header>
+
+  <div *ngIf="isLoading || errorMessage || (!accommodation && !isLoading)" class="status-container">
+    <div *ngIf="isLoading" class="loader"></div>
+    <div *ngIf="errorMessage" class="message-box error">
+      <p><strong>Fehler:</strong> {{ errorMessage }}</p>
     </div>
-  
-    <!-- Error State -->
-    <div *ngIf="errorMessage" class="error-message">
-      <p>{{ errorMessage }}</p>
-    </div>
-  
-    <!-- Accommodation Data Display -->
-    <div *ngIf="!isLoading && !errorMessage && accommodation" class="accommodation-details">
-      <h3>Accommodation Information</h3>
-      <p><strong>Accommodation ID:</strong> {{ accommodation.id }}</p>
-      <p><strong>Student ID:</strong> {{ accommodation.studentId }}</p>
-      <p><strong>Start Date:</strong> {{ accommodation.startDate | date:'mediumDate' }}</p>
-      <p><strong>Expiry Date:</strong> {{ accommodation.expiryDate ? (accommodation.expiryDate | date:'mediumDate') : 'N/A' }}</p>
-  
-      <h3 class="housing-unit-heading">Housing Unit Information</h3>
-      <p><strong>Name:</strong> {{ accommodation.housingUnit.name }}</p>
-      <p><strong>Description:</strong> {{ accommodation.housingUnit.description }}</p>
-      <p><strong>Category:</strong> {{ accommodation.housingUnit.category }}</p>
-      <p><strong>Address:</strong> {{ accommodation.housingUnit.address }}, {{ accommodation.housingUnit.city }}, {{ accommodation.housingUnit.zipCode }}</p>
-      <p><strong>Free Spaces:</strong> {{ accommodation.housingUnit.freeSpaces }}</p>
-    </div>
-  
-    <!-- No Accommodation Data (if not loading and no error, but data is null) -->
-    <div *ngIf="!isLoading && !errorMessage && !accommodation" class="no-data-message">
-      <p>No accommodation details found.</p>
+    <div *ngIf="!isLoading && !errorMessage && !accommodation" class="message-box info">
+      <p>Sie haben aktuell keine Unterkunft gebucht.</p>
     </div>
   </div>
-  
+
+  <div *ngIf="!isLoading && !errorMessage && accommodation" class="accommodation-content">
+    
+    <section class="details-section">
+      <h3>Allgemeine Informationen</h3>
+      <div class="details-grid">
+        <span class="grid-label">Unterkunfts-ID</span>
+        <span class="grid-value">{{ accommodation.id }}</span>
+
+        <span class="grid-label">Studenten-ID</span>
+        <span class="grid-value">{{ accommodation.studentId }}</span>
+
+        <span class="grid-label">Mietbeginn</span>
+        <span class="grid-value">{{ accommodation.startDate | date:'dd. MMMM yyyy' }}</span>
+
+        <span class="grid-label">Mietende</span>
+        <span class="grid-value">{{ accommodation.expiryDate ? (accommodation.expiryDate | date:'dd. MMMM yyyy') : 'Unbefristet' }}</span>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section class="details-section">
+      <h3>Details zur Wohneinheit</h3>
+      <div class="details-grid">
+        <span class="grid-label">Name</span>
+        <span class="grid-value">{{ accommodation.housingUnit.name }}</span>
+
+        <span class="grid-label">Beschreibung</span>
+        <span class="grid-value">{{ accommodation.housingUnit.description }}</span>
+
+        <span class="grid-label">Kategorie</span>
+        <span class="grid-value">{{ accommodation.housingUnit.category }}</span>
+
+        <span class="grid-label">Adresse</span>
+        <span class="grid-value">{{ accommodation.housingUnit.address }}, {{ accommodation.housingUnit.zipCode }} {{ accommodation.housingUnit.city }}</span>
+        
+        <span class="grid-label">Freie Plätze</span>
+        <span class="grid-value">{{ accommodation.housingUnit.freeSpaces }}</span>
+      </div>
+    </section>
+
+    <footer class="card-footer">
+      <button (click)="deleteBooking()" [disabled]="isDeleting" class="delete-button">
+        <span *ngIf="!isDeleting">Buchung stornieren</span>
+        <span *ngIf="isDeleting">Wird storniert...</span>
+      </button>
+    </footer>
+  </div>
+</div>

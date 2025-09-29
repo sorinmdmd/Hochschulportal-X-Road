@@ -1,6 +1,6 @@
 import { Component , OnInit} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
+import { environment } from '../enviroments/enviroment'
 
 interface StudyProgram {
   id: string;
@@ -31,11 +31,12 @@ export class MyProfile implements OnInit {
   personalInfo?: PersonalStudentInfo;
   isLoading = true;
   error?: string;
+  private baseUrl = environment.backendConfig.baseUrl;
 
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.http.get<PersonalStudentInfo>('http://localhost:8085/api/personalStudentInfo')
+    this.http.get<PersonalStudentInfo>(`${this.baseUrl}/personalStudentInfo`)
       .subscribe({
         next: (data) => {
           this.personalInfo = data;

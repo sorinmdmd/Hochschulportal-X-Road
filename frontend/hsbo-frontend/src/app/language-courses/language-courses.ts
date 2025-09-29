@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { environment } from '../enviroments/enviroment'
 
 interface LanguageCourse {
   id: string;
@@ -23,7 +24,7 @@ interface LanguageCourse {
 export class LanguageCourses implements OnInit {
   languageCourses: LanguageCourse[] = [];
   bookingMessage: string = '';
-  private readonly API_BASE_URL = 'http://localhost:8085/api/x-road';
+  private baseUrl = environment.backendConfig.baseUrl;
 
   constructor(private http: HttpClient) { }
 
@@ -31,11 +32,8 @@ export class LanguageCourses implements OnInit {
     this.fetchLanguageCourses();
   }
 
-  /**
-   * Fetches the list of language courses from the backend API.
-   */
   fetchLanguageCourses(): void {
-    this.http.get<LanguageCourse[]>(`${this.API_BASE_URL}/languageCourses`)
+    this.http.get<LanguageCourse[]>(`${this.baseUrl}/x-road/languageCourses`)
       .subscribe({
         next: (data) => {
           this.languageCourses = data;
@@ -47,20 +45,12 @@ export class LanguageCourses implements OnInit {
       });
   }
 
-  /**
-   * Sends a request to book a specific language course.
-   * @param courseId The ID of the course to book.
-   */
   bookCourse(courseId: string): void {
-    // Assuming the booking API expects a POST request to /languageCourse/{id}
-    // and the body might be empty or contain minimal data if needed by the backend.
-    // For this example, we'll send an empty object.
-    this.http.post(`${this.API_BASE_URL}/languageCourse/${courseId}`, {})
+   
+    this.http.post(`${this.baseUrl}/x-road/languageCourse/${courseId}`, {})
       .subscribe({
         next: (response) => {
-          console.log('Course booked successfully:', response);
           this.bookingMessage = `Successfully booked course with ID: ${courseId}!`;
-          // Optionally, refresh the list to reflect updated available slots
           this.fetchLanguageCourses();
         },
         error: (error) => {

@@ -38,7 +38,6 @@ export class Header implements OnInit{
   async loadToken() {
     try {
       this.token = await this.authService.getToken();
-      console.log('Token loaded:', this.token); // Debugging
 
       if (this.token) {
         this.decodeToken(this.token);
@@ -55,13 +54,10 @@ export class Header implements OnInit{
   decodeToken(token: string) {
     try {
       const decoded: any = jwtDecode(token);
-      console.log('Decoded JWT:', decoded); // Debugging
 
       this.name = decoded.given_name || decoded.preferred_username || decoded['upn'] || undefined;
       this.studentId = decoded.studentId || decoded.preferred_username || decoded['upn'] || undefined;
-      console.log('Extracted email:', this.name);
     } catch (error) {
-      console.error('Error decoding token:', error);
       this.name = undefined;
     }
   }

@@ -1,21 +1,57 @@
 <div class="profile-container" *ngIf="!isLoading && personalInfo; else loadingOrError">
+  
+  <header class="profile-header">
     <h2>Mein Profil</h2>
-    <div class="profile-item"><strong>Matrikelnummer:</strong> {{ personalInfo.studentId }}</div>
-    <div class="profile-item"><strong>Nationalität:</strong> {{ personalInfo.nationality }}</div>
-    <div class="profile-item"><strong>Geburtsdatum:</strong> {{ personalInfo.dateOfBirth | date }}</div>
-    <div class="profile-item"><strong>Anfangsdatum:</strong> {{ personalInfo.startDate | date }}</div>
-    <div class="profile-item"><strong>Aktuelle Semester:</strong> {{ personalInfo.actualSemester }}</div>
-  
-    <h3>Study Program</h3>
-    <div class="profile-item"><strong>Name:</strong> {{ personalInfo.studyProgram.name }}</div>
-    <div class="profile-item"><strong>Abschluss:</strong> {{ personalInfo.studyProgram.degreeLevel }}</div>
-    <div class="profile-item"><strong>Regelstudienzeit:</strong> {{ personalInfo.studyProgram.numberOfSemesters }}</div>
-    <div class="profile-item"><strong>Studienbereich:</strong> {{ personalInfo.studyProgram.facultyName }}</div>
-    <div class="profile-item"><strong>Campus:</strong> {{ personalInfo.studyProgram.campusName }}</div>
+  </header>
+
+  <section class="profile-section">
+    <div class="profile-grid">
+      <div class="grid-item label">Matrikelnummer:</div>
+      <div class="grid-item value">{{ personalInfo.studentId }}</div>
+
+      <div class="grid-item label">Nationalität:</div>
+      <div class="grid-item value">{{ personalInfo.nationality }}</div>
+
+      <div class="grid-item label">Geburtsdatum:</div>
+      <div class="grid-item value">{{ personalInfo.dateOfBirth | date:'dd.MM.yyyy' }}</div>
+
+      <div class="grid-item label">Studienbeginn:</div>
+      <div class="grid-item value">{{ personalInfo.startDate | date:'dd.MM.yyyy' }}</div>
+
+      <div class="grid-item label">Aktuelles Semester:</div>
+      <div class="grid-item value">{{ personalInfo.actualSemester }}. Fachsemester</div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <section class="profile-section">
+    <h3>Studiengang</h3>
+    <div class="profile-grid">
+      <div class="grid-item label">Name:</div>
+      <div class="grid-item value">{{ personalInfo.studyProgram.name }}</div>
+
+      <div class="grid-item label">Abschluss:</div>
+      <div class="grid-item value">{{ personalInfo.studyProgram.degreeLevel }}</div>
+
+      <div class="grid-item label">Regelstudienzeit:</div>
+      <div class="grid-item value">{{ personalInfo.studyProgram.numberOfSemesters }} Semester</div>
+
+      <div class="grid-item label">Studienbereich:</div>
+      <div class="grid-item value">{{ personalInfo.studyProgram.facultyName }}</div>
+
+      <div class="grid-item label">Campus:</div>
+      <div class="grid-item value">{{ personalInfo.studyProgram.campusName }}</div>
+    </div>
+  </section>
+
+</div>
+
+<ng-template #loadingOrError>
+  <div class="status-container">
+    <div *ngIf="isLoading" class="loader"></div>
+    <div *ngIf="!isLoading && error" class="error-box">
+      <strong>Fehler:</strong> {{ error }}
+    </div>
   </div>
-  
-  <ng-template #loadingOrError>
-    <div *ngIf="isLoading">Loading profile...</div>
-    <div *ngIf="!isLoading && error" class="error">{{ error }}</div>
-  </ng-template>
-  
+</ng-template>

@@ -1,16 +1,15 @@
 <div class="container">
-    <h2>My Language Courses</h2>
-  
-    <div *ngIf="bookings.length === 0">No bookings found.</div>
-  
-    <div *ngFor="let booking of bookings" class="course-card">
-      <h3>{{ booking.course?.language }} ({{ booking.course?.group }})</h3>
-      <p><strong>Tutor:</strong> {{ booking.course?.tutorName }}</p>
-      <p><strong>Duration:</strong> {{ booking.course?.duration }}</p>
-      <p><strong>Start:</strong> {{ booking.course?.start | date:'medium' }}</p>
-      <p><strong>End:</strong> {{ booking.course?.end | date:'medium' }}</p>
-      <p><strong>Location:</strong> {{ booking.course?.location }}</p>
-      <p><strong>Available Slots:</strong> {{ booking.course?.availableSlots }}</p>
-    </div>
+  <h2>Meine Sprachkurse</h2>
+
+  <div *ngIf="bookings.length === 0">Keine Buchungen gefunden.</div>
+
+  <div *ngFor="let booking of bookings" class="course-card">
+    <h3>{{ booking.course?.language }} ({{ booking.course?.group }})</h3>
+    <p><strong>Tutor:</strong> {{ booking.course?.tutorName }}</p>
+    <p><strong>Dauer:</strong> {{ booking.course?.duration }}</p>
+    <p><strong>Beginn:</strong> {{ booking.course?.start | date:'medium' }}</p>
+    <p><strong>Ende:</strong> {{ booking.course?.end | date:'medium' }}</p>
+    <p><strong>Ort:</strong> {{ booking.course?.location }}</p>
+    <p><strong>Verfügbare Plätze:</strong> {{ booking.course?.availableSlots }}</p>
   </div>
-  
+</div>
