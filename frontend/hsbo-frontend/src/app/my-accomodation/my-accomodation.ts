@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CommonModule, DatePipe } from '@angular/common'; // Import CommonModule and DatePipe
-import { FormsModule } from '@angular/forms'; // Import FormsModule if needed for two-way binding, though not directly used here
-// Define interfaces for the data structure
+import { CommonModule, DatePipe } from '@angular/common';
+import { FormsModule } from '@angular/forms'; 
+import { environment } from '../enviroments/enviroment'
+
 interface HousingUnit {
   id: string;
   name: string;
@@ -17,8 +18,8 @@ interface HousingUnit {
 interface Accommodation {
   id: string;
   studentId: string;
-  startDate: string; // ISO 8601 string
-  expiryDate: string | null; // ISO 8601 string or null
+  startDate: string; 
+  expiryDate: string | null;
   housingUnit: HousingUnit;
 }
 
@@ -33,8 +34,11 @@ accommodation: Accommodation | null = null;
 isLoading: boolean = true;
 errorMessage: string | null = null;
 isDeleting: boolean = false;
+private baseUrl = environment.backendConfig.baseUrl;
+
 
 constructor(private http: HttpClient) {}
+
 
 ngOnInit(): void {
   this.fetchAccommodation();
@@ -43,7 +47,7 @@ ngOnInit(): void {
 fetchAccommodation(): void {
   this.isLoading = true;
   this.errorMessage = null;
-  const apiUrl = 'http://localhost:8085/api/x-road/housingUnit/getMyBooking';
+  const apiUrl = `${this.baseUrl}/x-road/housingUnit/getMyBooking`;
 
   this.http.get<Accommodation>(apiUrl).subscribe({
     next: (data) => {
@@ -65,7 +69,7 @@ fetchAccommodation(): void {
 
   this.isDeleting = true;
   this.errorMessage = null;
-  const url = 'http://localhost:8085/api/x-road/housingUnit/';
+  const url = `${this.baseUrl}/x-road/housingUnit/`;
 
   this.http.delete(url, { responseType: 'text' }).subscribe({
     next: (response) => {

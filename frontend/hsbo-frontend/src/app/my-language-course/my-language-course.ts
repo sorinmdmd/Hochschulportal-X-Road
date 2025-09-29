@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../enviroments/enviroment'
 
 interface LanguageCourse {
   id?: string;
@@ -27,11 +28,12 @@ interface LanguageCourseBooking {
 })
 export class MyLanguageCourse implements OnInit {
   bookings: LanguageCourseBooking[] = [];
+  private baseUrl = environment.backendConfig.baseUrl;
 
   constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.http.get<LanguageCourseBooking[]>('http://localhost:8085/api/x-road/myLanguageCourses')
+    this.http.get<LanguageCourseBooking[]>(`${this.baseUrl}/x-road/myLanguageCourses`)
       .subscribe(data => {
         this.bookings = data;
       });

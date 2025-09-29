@@ -57,8 +57,7 @@ export class AuthService {
     try {
       const token = await this.keycloak.getToken();
 
-      console.log('Raw token from Keycloak:', token); // Add this for debugging
-      return token || ''; // Return empty string instead of undefined
+      return token || ''; 
     } catch (error) {
       console.error('Error getting token:', error);
       return '';

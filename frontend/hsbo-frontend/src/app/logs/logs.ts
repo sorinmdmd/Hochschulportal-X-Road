@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-
+import { environment } from '../enviroments/enviroment'
 
 interface LogEntry {
   log_time: string;
@@ -10,7 +10,7 @@ interface LogEntry {
   http_method: string;
   url_path: string;
   message_flattened: string;
-  xRoadClient: string | null; // <- Änderung hier
+  xRoadClient: string | null;
 }
 
 @Component({
@@ -22,7 +22,8 @@ interface LogEntry {
 export class Logs implements OnInit{
   logs: LogEntry[] = [];
   errorMessage: string = '';
-  private apiUrl = 'http://localhost:8085/api/x-road/housingUnits/getLogs';
+  private baseUrl = environment.backendConfig.baseUrl;
+  private apiUrl = `${this.baseUrl}/x-road/housingUnits/getLogs`;
 
   constructor(private http: HttpClient) { }
 
@@ -40,7 +41,6 @@ export class Logs implements OnInit{
         })
       )
       .subscribe(data => {
-        // Sort by descending time and extract X-Road-Client
         this.logs = data.map(log => ({
           ...log,
           xRoadClient: this.extractXRoadClient(log.message_flattened)
